@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Tilt+Prism&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Nanum+Gothic&family=Tilt+Prism&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
 
 /* estilo gral en todas las paginas */
 
@@ -9,7 +9,7 @@
 }
 
 
-/* estilo body */
+/* estilo boby */
 
 .body {
     background-color: black;
@@ -17,16 +17,6 @@
     padding: 5px;
     ;
 }
-
-.bodyProductos {
-    background-color: black;
-    min-height: 100vh;
-    padding: 5px;
-    
-}
-
-
-
 
 
 /* estilo barra navegacion */
@@ -54,12 +44,12 @@ h1 {
 }
 
 h2 {
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'Didact Gothic', sans-serif;
     text-align: center;
 }
 
 .description {
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'Didact Gothic', sans-serif;
     font-size: 2.5vh;
     margin: 1vh 4vh 1vh 4vh;
     text-align: justify;
@@ -70,8 +60,6 @@ h2 {
     padding: 10px;
     width: 70px;
     height: auto;
-  
-
 }
 
 .listaContainer {
@@ -146,8 +134,6 @@ h2 {
     padding: 10px;
     width: 70px;
     height: auto;
-    backdrop-filter: blur(50px);
-    opacity: 0.8;
 }
 
 
@@ -167,7 +153,7 @@ h2 {
 
 .info-formulario {
     width: 100%;
-    
+    border: 2px solid;
     padding: 10px;
 }
 
@@ -192,13 +178,12 @@ h2 {
     font-weight: 700;
 }
 
-.icono{
+.icono {
     width: 20px;
     height: auto;
-
 }
 
-.info{
+.info {
     padding: 10px;
 }
 
@@ -338,4 +323,3 @@ h2 {
     height: 400px; /* Ajusta la altura deseada para las imágenes */
     object-fit: cover; /* Ajusta el tamaño de la imagen para que cubra todo el contenedor sin distorsionarse */
 }
-
