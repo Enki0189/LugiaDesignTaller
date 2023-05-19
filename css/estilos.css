@@ -232,38 +232,42 @@ h2 {
     text-shadow: -1px -1px 1px rgb(255, 255, 255);
 }
 
+
 /* ------------------------ estilos seccion productos -------------------------*/
+
 .imagenPro {
     width: 200px;
     height: auto;
     border: 2px solid dodgerblue;
-   
-    
-
 }
 
+
 /* ------------------------ estilos seccion nosotros -------------------------*/
+
 .nosotros_container {
     display: flex;
     justify-content: center;
     flex-direction: column;
-
 }
 
 .infor_container {
     display: flex;
     flex-direction: column;
+    font-family: 'Didact Gothic', sans-serif;
 }
-  
-.info, .imagenes_info {
+
+.info,
+.imagenes_info {
     flex-basis: 50%;
-} 
+}
 
 .imagenes_info img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
+
 /* .infor_container{
     display: flex;
     border: solid dodgerblue;
@@ -274,7 +278,6 @@ h2 {
 .imagenes_info {
     width: 300px;
     height: auto;
-
 }
 
 .iconos_container {
@@ -282,9 +285,7 @@ h2 {
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    
-
-
+    font-family: 'Didact Gothic', sans-serif;
 }
 
 .titulo_nosotros {
@@ -303,8 +304,7 @@ h2 {
     padding: 10px;
     margin-bottom: 10px;
 }
-  
-    
+
 .img_nosotros {
     padding: 10px;
     background-color: black;
@@ -314,12 +314,20 @@ h2 {
     opacity: 0.8;
 }
 
-.carousel-container {
-    width: 80%; /* Ajusta el ancho del contenedor del carrusel según tus necesidades */
-    margin: 0 auto; /* Centra el carrusel horizontalmente */
+h3 {
+    font-family: 'Inconsolata', monospace;
 }
-  
-  .carousel-img {
-    height: 400px; /* Ajusta la altura deseada para las imágenes */
-    object-fit: cover; /* Ajusta el tamaño de la imagen para que cubra todo el contenedor sin distorsionarse */
+
+.carousel-container {
+    width: 80%;
+    /* Ajusta el ancho del contenedor del carrusel según tus necesidades */
+    margin: 0 auto;
+    /* Centra el carrusel horizontalmente */
+}
+
+.carousel-img {
+    height: 400px;
+    /* Ajusta la altura deseada para las imágenes */
+    object-fit: cover;
+    /* Ajusta el tamaño de la imagen para que cubra todo el contenedor sin distorsionarse */
 }
