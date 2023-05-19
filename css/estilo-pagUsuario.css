@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Tilt+Prism&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
+#barra-lateral {
+    height: 100%;
+    background-color: dodgerblue;
+    z-index: 1;
+    top: 0;
+    margin-left: 1vw;
+    padding: 1vw 0.5vw;
+    overflow: hidden;
+}
+
+#titulo-menu {
+    color: black;
+    padding: 0vw 1vw;
+}
+
+.nav-item {
+    background-color: rgb(80, 172, 238);
+    margin: 2px;
+    border-radius: 10px;
+}
