@@ -30,64 +30,150 @@
         </nav>
         <!-- fin barra de navegacion -->
     </header>
-    <div class="row">
-        <div class="col-2">
-            <div id="barra-lateral">
+    <div class="row" id="main-body">
+        <div class="wrapper col-2">
+            <div class="buttonWrapper" id="barra-lateral">
                 <ul class="nav flex-column">
                     <p id="titulo-menu">Menú</p>
                     <li class="nav-item">
-                        <a class="nav-link active" href="">Mi información</a></li>
+                        <button class="nav-link tab-button active" data-id="info">Mi información</button></li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Mis pedidos</a></li>
+                        <button class="nav-link tab-button" data-id="pedidos">Mis pedidos</button></li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Mi lista de deseos</a></li>
+                        <button class="nav-link tab-button" data-id="deseos">Mi lista de deseos</button></li>
                 </ul>
             </div>
         </div>
-        <div class="col-10">
-            <table class="table">
-                <button type="button" class="btn btn-primary">Editar datos</button>
-                <tr>
-                    <td>Usuario</td>
-                    <td>maria2</td>
-                </tr>
-                <tr>
-                    <td>Nombre</td>
-                    <td>María Perez</td>
-                </tr>
-                <tr>
-                    <td>Email</td>
-                    <td>Maria@gmail.com</td>
-                </tr>
-                <tr>
-                    <td>CUIL</td>
-                    <td>23-32654946-4</td>
-                </tr>
-                <tr>
-                    <td>Teléfono</td>
-                    <td>+54 011 2623 3464</td>
-                </tr>
-                <tr>
-                    <td>Teléfono alternativo</td>
-                    <td>+54 011 3654 3354</td>
-                </tr>
-                <tr>
-                    <td>Provincia</td>
-                    <td>Ciudad Autónoma de Buenos Aires</td>
-                </tr>
+        <div class="contentWrapper col-10">
+            <div class="content active" id="info">
+                <table class="table">
+                    <button type="button" class="btn btn-primary">Editar datos</button>
+                    <tr>
+                        <td>Usuario</td>
+                        <td>maria2</td>
+                    </tr>
+                    <tr>
+                        <td>Nombre</td>
+                        <td>María Perez</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>Maria@gmail.com</td>
+                    </tr>
+                    <tr>
+                        <td>CUIL</td>
+                        <td>23-32654946-4</td>
+                    </tr>
+                    <tr>
+                        <td>Teléfono</td>
+                        <td>+54 011 2623 3464</td>
+                    </tr>
+                    <tr>
+                        <td>Teléfono alternativo</td>
+                        <td>+54 011 3654 3354</td>
+                    </tr>
+                    <tr>
+                        <td>Provincia</td>
+                        <td>Ciudad Autónoma de Buenos Aires</td>
+                    </tr>
 
-                <tr>
-                    <td>Dirección</td>
-                    <td>Av. San Juan 3642 7° A</td>
-                </tr>
+                    <tr>
+                        <td>Dirección</td>
+                        <td>Av. San Juan 3642 7° A</td>
+                    </tr>
 
-                <tr>
-                    <td>Contraseña</td>
-                    <td>**********
-                        <button type="button" class="btn btn-primary">Cambiar contraseña</button>
-                    </td>
-                </tr>
-            </table>
+                    <tr>
+                        <td>Contraseña</td>
+                        <td>**********
+                            <button type="button" class="btn btn-primary">Cambiar contraseña</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <div class="content" id="pedidos">
+                <table class="table">
+                    <tr>
+                        <th>Número de pedido</th>
+                        <th>Fecha de pedido</th>
+                        <th>Estado</th>
+                        <th>Detalle de productos</th>
+                        <th>Medio de pago</th>
+                    </tr>
+                    <tr>
+                        <td>#23</td>
+                        <td>01-05-2023</td>
+                        <td>En tránsito</td>
+                        <td>1 Escritorio gamer</td>
+                        <td>Transferencia bancaria</td>
+                    </tr>
+                    <tr>
+                        <td>#23</td>
+                        <td>01-05-2023</td>
+                        <td>En tránsito</td>
+                        <td>1 Escritorio gamer</td>
+                        <td>Transferencia bancaria</td>
+                    </tr>
+                    <tr>
+                        <td>#23</td>
+                        <td>01-05-2023</td>
+                        <td>En tránsito</td>
+                        <td>1 Escritorio gamer</td>
+                        <td>Transferencia bancaria</td>
+                    </tr>
+                    <tr>
+                        <td>#23</td>
+                        <td>01-05-2023</td>
+                        <td>En tránsito</td>
+                        <td>1 Escritorio gamer</td>
+                        <td>Transferencia bancaria</td>
+                    </tr>
+                    <tr>
+                        <td>#23</td>
+                        <td>01-05-2023</td>
+                        <td>En tránsito</td>
+                        <td>1 Escritorio gamer</td>
+                        <td>Transferencia bancaria</td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <div class="content" id="deseos">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card">
+                            <img src="./Imagenes/escritorioBlancoT.jpeg" class="card-img-top" alt="Escritorio gamer blanco.">
+                            <div class="card-body">
+                                <h5 class="card-title">Escritorio 1</h5>
+                                <p class="card-text">Info sobre escritorio</p>
+                                <a href="#" class="btn btn-primary">Comprar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card">
+                            <img src="./Imagenes/escritorioNegroRHor.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Escritorio 2</h5>
+                                <p class="card-text">Info sobre escritorio</p>
+                                <a href="#" class="btn btn-primary">Comprar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card">
+                            <img src="./Imagenes/escritorioNegroV2.jpeg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Info sobre escritorio</p>
+                                <a href="#" class="btn btn-primary">Comprar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -106,7 +192,7 @@
         </div>
     </footer>
     <!-- fin footer -->
-
+    <script src="./js/pagUsuario.js"></script>
 </body>
 
 </html>
