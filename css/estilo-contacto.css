@@ -149,12 +149,15 @@ h2 {
     justify-items: center;
     gap: 40px;
     margin-top: 90px;
+    margin-bottom: 20px;
 }
 
 .info-formulario {
     width: 100%;
-    border: 2px solid;
     padding: 10px;
+    background-color: rgbas(120, 119, 123, 0.3);
+    border-radius: 0.5em;
+    box-shadow: inset 1px 1px 22px 4px rgba(29, 157, 207, 0.85)
 }
 
 .formulario-container h2 {
@@ -176,6 +179,7 @@ h2 {
     margin-bottom: 15px;
     color: dodgerblue;
     font-weight: 700;
+    
 }
 
 .icono {
@@ -193,7 +197,7 @@ h2 {
     margin: 0 auto;
     background-color: rgbas(120, 119, 123, 0.3);
     border-radius: 0.5em;
-    box-shadow: inset 1px 1px 22px 4px rgba(226, 221, 221, 0.85);
+    box-shadow: inset 1px 1px 22px 4px rgba(29, 157, 207, 0.85);
     /*
     width: 100%;
     border: 2px solid;
@@ -238,6 +242,12 @@ h2 {
     text-align: center;
     text-decoration: none;
     text-shadow: -1px -1px 1px rgb(255, 255, 255);
+}
+
+.modal-body {
+    text-shadow: -1px -1px 1px rgb(255, 255, 255);
+    border: dodgerblue solid;
+
 }
 
 
