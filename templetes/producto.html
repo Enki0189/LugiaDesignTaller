@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Producto</title>
+</head>
+<body>
+    <h1>Detalles del Producto</h1>
+    <h2>{{ producto['nombre'] }}</h2>
+    <p>Precio: ${{ producto['precio'] }}</p>
+    <form action="/carrito" method="post">
+        <input type="hidden" name="producto_id" value="{{ producto['id'] }}">
+        <input type="submit" value="Agregar al carrito">
+    </form>
+    <script src="https://www.mercadopago.com/v2/security.js" view="item"></script>
+</body>
+</html>
