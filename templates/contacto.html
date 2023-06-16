@@ -1,0 +1,29 @@
+{% extends 'layout.html'%} {% block body %}
+<!--formulario contacto-->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<!-- contenedor padre-->
+<div class="formulario-container">
+    <!-- contenedor item -->
+    <div class="info-formulario">
+        <h2 data-aos="fade-left" data-aos-anchor="#example-anchor" data-aos-offset="500" data-aos-duration="500">CONTACTENOS</h2>
+        <p data-aos="fade-right"> somos una empresa familiar que realiza muebles de diseño </p>
+        <a href="" https: "" class="info" data-aos="fade-down">
+            <img src="{{url_for('static', filename='Imagenes/WhatsApp_icon.png.ico')}}" alt="iconoWpp" class="icono">1555555555</a>
+        <a href="" https: class="info" data-aos="fade-down">
+            <img src="{{url_for('static', filename='Imagenes/emailIcono.ico')}}" alt="iconoMail" class="icono">lugia@gmail.com</a>
+    </div>
+    <!-- contenedor item-->
+    <form action="#" autocomplete="off" class="formulario">
+        <input type="text" name="nombre" placeholder="Ingrese su nombre" class="campo">
+        <input type="email" name="email" placeholder="Ingrese su email" class="campo">
+        <textarea name="mensaje" placeholder="Ingrese un mensaje" class="textarea-form"></textarea>
+        <input type="submit" name="enviar" value="Enviar msj" class="btn-enviar">
+    </form>
+    <!--fin formulario contacto-->
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</div>
+{% endblock%}
