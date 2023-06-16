@@ -17,6 +17,16 @@ def contacto():
 def nosotros():
     return render_template("nosotros.html")
 
+#todos los productos
+@app.route('/productos.html')
+def productos():
+    return render_template("productos.html")
+
+#producto individual
+@app.route('/producto.html')
+def producto():
+    return render_template("producto.html")
+
 @app.route('/pagUsuario.html')
 def pagUsuario():
     return render_template("pagUsuario.html")
