@@ -1,0 +1,75 @@
+{% extends 'layout.html'%} {% block body %}
+<link rel="stylesheet" href="{{url_for('static', filename='./css/estilo-login-register.css')}}">
+
+<form>
+    <div class="container-fluid cuadro">
+        <div class="row">
+            <div class="col-6 mb-3">
+                <label for="exampleInputEmail1" class="form-label">Nombre de usuario</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class=" col-6 mb-3">
+                <label for="exampleInputPassword1" class="form-label">Correo electrónico</label>
+                <input type="password" class="form-control" id="email">
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <label for="exampleInputPassword1" class="form-label">Nombre</label>
+                <input type="password" class="form-control" id="name">
+            </div>
+            <div class="col-6 mb-3">
+                <label for="exampleInputPassword1" class="form-label">Apellido</label>
+                <input type="password" class="form-control" id="lastname">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <label for="exampleInputPassword1" class="form-label">CUIL o DNI</label>
+                <input type="password" class="form-control" id="personal-id">
+            </div>
+
+            <div class="col-6 mb-3">
+                <label for="exampleInputPassword1" class="form-label">Teléfono</label>
+                <input type="password" class="form-control" id="phone">
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <label for="exampleInputPassword1" class="form-label">Provincia</label>
+                <input type="password" class="form-control" id="province">
+            </div>
+
+            <div class="col-6 mb-3">
+                <label for="exampleInputPassword1" class="form-label">Dirección</label>
+                <input type="password" class="form-control" id="address">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+
+            <div class="col-6 mb-3">
+                <label for="exampleInputPassword1" class="form-label">Repetir contraseña</label>
+                <input type="password" class="form-control" id="password-2">
+            </div>
+        </div>
+        <!--por ahora no funciona-->
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Suscribirme a newsletter</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </div>
+    </div>
+</form>
+
+{% endblock%}
