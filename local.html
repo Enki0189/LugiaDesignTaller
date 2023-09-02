@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/estilos.css">
     <link rel="icon" type="image/vnd.microsoft.icon" href="Imagenes/iconoLugia.ico">
-    <title>Local</title>
+    <title>Lugia Design</title>
 </head>
-
 <body class="body">
-    <!--encabezado-->
     <header class="headerContainer">
-        <!--barea de navegacion-->
         <nav class="navContainer">
             <img src="./Imagenes/lugiaLogo.jpeg" alt="lugiaLogo" class="imagenNav">
             <ul class="listaContainer">
@@ -24,16 +19,50 @@
                 <li class="listaItem"><a href="productos.html" target="_blank">Productos</a></li>
                 <li class="listaItem"><a href="contacto.html" target="_blank">Contacto</a></li>
             </ul>
+            <div class="carritoIcon">
+                <span id="carritoContador">0</span>
+                <img width="5%" src="./Imagenes/carrito-icon.png" alt="Carrito de compras" id="carritoImagen">
+            </div>
         </nav>
-        <!-- fin barra de navegacion -->
     </header>
-    <!-- fin encabezado -->
-
-
-    <!-- footer -->
+    <main>
+        <h1>LUGIA DESIGN</h1>
+        <h2>Productos Destacados</h2>
+        <section class="productosContainer">
+            <div class="productos">
+                <!-- Producto 1 -->
+                <div class="productoItem">
+                    <img src="Imagenes/escritorioNegroV2.jpeg" alt="EscritorioNegroV2" class="imagenProd">
+                    <p class="precio">$20000</p>
+                    <button class="agregarCarrito" onclick="agregarAlCarrito('Escritorio Negro V2', 20000)">Agregar al carrito</button>
+                </div>
+                <!-- Producto 2 -->
+                <div class="productoItem">
+                    <img src="Imagenes/escritorioBlancoT.jpeg" alt="EscritorioBlancoT" class="imagenProd">
+                    <p class="precio">$25000</p>
+                    <button class="agregarCarrito" onclick="agregarAlCarrito('Escritorio Blanco T', 25000)">Agregar al carrito</button>
+                </div>
+               <!-- Producto 3 -->
+               <div class="productoItem">
+                <img src="Imagenes/escritorioNegroT.jpeg" alt="escritorioNegroT" class="imagenProd">
+                <p class="precio">$18000</p>
+                <button class="agregarCarrito" onclick="agregarAlCarrito('escritorio Negro T', 18000)">Agregar al carrito</button>
+            </div>
+            </div>
+        </section>
+        <p class="description">Nuestros escritorios están diseñados para...</p>
+        <!-- Carrito de compras -->
+        <section class="carritoContainer">
+            <h2>Carrito de Compras</h2>
+            <ul id="carritoLista">
+                <!-- Elementos del carrito se agregarán dinámicamente aquí -->
+            </ul>
+            <p>Total: <span id="total">0</span></p>
+        </section>
+    </main>
     <footer class="footer">
         <div class="footerContainer">
-            <img src="./Imagenes/iconoLugia.ico" alt="logo" class="logoFooter">
+            <img src="Imagenes/iconoLugia.ico" alt="logo" class="logoFooter">
             <nav class="navFooter">
                 <ul class="listaFooter">
                     <li><a href="https://web.whatsapp.com/" target="_blank">WhatsApp</a></li>
@@ -43,9 +72,15 @@
             </nav>
         </div>
     </footer>
-    <!-- fin footer -->
 
-
+    <!--js-->
+    
+    <script src="./js/carrito.js"></script> <!-- Agrega un archivo JS separado para el manejo del carrito -->
+    <script >
+        function actualizarContadorCarrito() {
+            const carritoContador = document.getElementById('carritoContador');
+            carritoContador.textContent = carrito.length;
+        }
+    </script>
 </body>
-
 </html>
