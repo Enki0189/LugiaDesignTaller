@@ -58,6 +58,8 @@
                 <!-- Elementos del carrito se agregarán dinámicamente aquí -->
             </ul>
             <p>Total: <span id="total">0</span></p>
+            <span><button id="finalizarCompra"></button></span>
+
         </section>
     </main>
     <footer class="footer">
@@ -76,11 +78,11 @@
     <!--js-->
     
     <script src="./js/carrito.js"></script> <!-- Agrega un archivo JS separado para el manejo del carrito -->
-    <script >
-        function actualizarContadorCarrito() {
-            const carritoContador = document.getElementById('carritoContador');
-            carritoContador.textContent = carrito.length;
-        }
-    </script>
+
+    <script src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"></script>
+    
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+
+    
 </body>
 </html>
