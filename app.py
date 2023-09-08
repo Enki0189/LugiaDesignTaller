@@ -39,6 +39,10 @@ def login():
 def register():
     return render_template("register.html")
 
+@app.route('/carrito.html')
+def carrito():
+    return render_template("carrito.html")
+
 
 #prueba de flask, no es necesario por ahora
 #user profile
