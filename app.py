@@ -31,6 +31,18 @@ def producto():
 def pagUsuario():
     return render_template("pagUsuario.html")
 
+@app.route('/login.html')
+def login():
+    return render_template("login.html")
+
+@app.route('/register.html')
+def register():
+    return render_template("register.html")
+
+@app.route('/carrito.html')
+def carrito():
+    return render_template("carrito.html")
+
 
 #prueba de flask, no es necesario por ahora
 #user profile

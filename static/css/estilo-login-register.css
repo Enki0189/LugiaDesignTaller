@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Tilt+Prism&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
+.cuadro {
+    border: 2px solid;
+    border-color: dodgerblue;
+    padding: 2vw;
+    margin-bottom: 2vw;
+    font-family: 'Inconsolata', monospace;
+    font-size: 1vw;
+}
+
+.form-text {
+    color: rgb(127, 247, 247);
+}
