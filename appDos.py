@@ -47,26 +47,20 @@ def pagUsuario():
 def crearUsuario():
     print('Se recibe solicitud de creacion de nuevo usuario.')
     id = 1
-    #nombreUsuario = request.form['nombreUsuario']
-    #contrasena = request.form['contrasena']
-    #nombreYapellido = request.form['nombreYapellido']
-    #email = request.form['email']
-    #telefono = request.form['telefono']
-    #direccion = request.form['direccion']
-    #provincia = request.form['provincia']
-    #cuil = request.form['cuil']
-    nombreUsuario = 'nombreUsuario'
-    contrasena = 'contrasena'
-    nombreYapellido = 'nombreYapellido'
-    email = 'email'
-    telefono = 1234567
-    direccion = 'direccion'
-    provincia = 'provincia'
-    cuil = 'cuil'
+    nombreUsuario = request.form['userName']
+    password = request.form['password']
+    nombre = request.form['nombre']
+    apellido = request.form['apellido']
+    email = request.form['email']
+    telefono = request.form['phone']
+    direccion = request.form['address']
+    provincia = request.form['province']
+    personalId = request.form['personalId']
+    nombreYapellido = nombre + ' ' + apellido
     rol = 1
     cur = mysql.connection.cursor()
     print('Dando de alta usuario.')
-    cur.execute('INSERT INTO usuario (idUsuario, nombreUsuario, contraseña, rol, email, direccion, telefono, nombreYapellido, cuil, provincia) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (id, nombreUsuario, contrasena, rol, email, direccion, telefono, nombreYapellido, cuil, provincia))
+    cur.execute('INSERT INTO usuario (idUsuario, nombreUsuario, contraseña, rol, email, direccion, telefono, nombreYapellido, cuil, provincia) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (id, nombreUsuario, password, rol, email, direccion, telefono, nombreYapellido, personalId, provincia))
     mysql.connection.commit()
     print('Usuario dado de alta.')
 

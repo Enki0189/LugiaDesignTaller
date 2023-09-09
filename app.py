@@ -1,11 +1,21 @@
 from flask import Flask, render_template
+from flask import Flask, request
+from flask_mysqldb import MySQL
 
 #flask instance
 app = Flask(__name__)
 
+#configuracion base de datos
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = '010420'
+app.config['MYSQL_DB'] = 'lugia_design'
+
+mysql = MySQL(app)
+
 #create route decorator
 @app.route('/')
-
 def index():
     return render_template("index.html")
 
@@ -43,6 +53,35 @@ def register():
 def carrito():
     return render_template("carrito.html")
 
+@app.route('/usuario' , methods = ['POST'])
+def crearUsuario():
+    print('Se recibe solicitud de creacion de nuevo usuario.')
+    id = 3
+    nombreUsuario = request.form['userName']
+    print('Se recibe solicitud de creacion de nuevo usuario.')
+    password = request.form['password']
+    print('password ingresada')
+    nombre = request.form['nombre']
+    print('nombre ingresado')
+    apellido = request.form['apellido']
+    print('apellido ingresado')
+    email = request.form['email']
+    print('email ingresado.')
+    telefono = request.form['phone']
+    print('telefono ingresado.')
+    direccion = request.form['address']
+    print('Direccion ingresada.')
+    provincia = request.form['province']
+    print('Provincia ingresada.')
+    personalId = request.form['personalId']
+    print('Cuil ingresado')
+    nombreYapellido = nombre + ' ' + apellido
+    rol = 1
+    cur = mysql.connection.cursor()
+    print('Dando de alta usuario.')
+    cur.execute('INSERT INTO usuario (idUsuario, nombreUsuario, contraseña, rol, email, direccion, telefono, nombreYapellido, cuil, provincia) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (id, nombreUsuario, password, rol, email, direccion, telefono, nombreYapellido, personalId, provincia))
+    mysql.connection.commit()
+    print('Usuario dado de alta.')
 
 #prueba de flask, no es necesario por ahora
 #user profile
