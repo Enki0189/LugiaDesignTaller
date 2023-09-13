@@ -29,12 +29,23 @@ def nosotros():
 
 @app.route('/productos')
 def productos():
-    products = [
-        {"name": "Marca Modelo1", "imagen": "escritorioNeVH.jpeg", "price": "$10.000"},
-        {"name": "Marca Modelo2", "imagen": "escritorioNeVH.jpeg", "price": "$11.000"},
-        {"name": "Marca Modelo3", "imagen": "escritorioNeVH.jpeg", "price": "$12.000"},
-        {"name": "Marca Modelo4", "imagen": "escritorioNeVH.jpeg", "price": "$13.000"}
-    ]
+    cur = mysql.connection.cursor()
+    # Ejecuta consulta SQL para obtener productos
+    cur.execute("SELECT NombreProducto, Descripcion, precio, stock FROM Productos")
+    
+    # Obtiene todos los resultados de la consulta
+    db_products = cur.fetchall()
+
+    # Construye la lista de productos basándonos en los resultados
+    products = []
+    for product in db_products:
+        product_data = {
+            "name": product[0],
+            "descripcion": product[1], 
+            "imagen": "escritorioNeVH.jpeg", 
+            "price": "${:,.2f}".format(product[2]) 
+        }
+        products.append(product_data)
     return render_template('productos.html', products=products)
 
 #producto individual
@@ -64,30 +75,19 @@ def crearUsuario():
     print('Se recibe solicitud de creacion de nuevo usuario.')
     id = 3
     nombreUsuario = request.form['userName']
-    print('Se recibe solicitud de creacion de nuevo usuario.')
     password = request.form['password']
-    print('password ingresada')
     nombre = request.form['nombre']
-    print('nombre ingresado')
     apellido = request.form['apellido']
-    print('apellido ingresado')
     email = request.form['email']
-    print('email ingresado.')
     telefono = request.form['phone']
-    print('telefono ingresado.')
     direccion = request.form['address']
-    print('Direccion ingresada.')
     provincia = request.form['province']
-    print('Provincia ingresada.')
     personalId = request.form['personalId']
-    print('Cuil ingresado')
     nombreYapellido = nombre + ' ' + apellido
     rol = 1
     cur = mysql.connection.cursor()
-    print('Dando de alta usuario.')
     cur.execute('INSERT INTO usuario (idUsuario, nombreUsuario, contraseña, rol, email, direccion, telefono, nombreYapellido, cuil, provincia) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (id, nombreUsuario, password, rol, email, direccion, telefono, nombreYapellido, personalId, provincia))
     mysql.connection.commit()
-    print('Usuario dado de alta.')
 
 #prueba de flask, no es necesario por ahora
 #user profile
