@@ -20,10 +20,10 @@
         <nav class="navContainer">
             <img src="{{url_for('static', filename='./Imagenes/lugiaLogo.jpeg')}}" alt="lugiaLogo" class="imagenNav">
             <ul class="listaContainer">
-                <li class="listaItem"><a href="/" target="_blank">Inicio</a></li>
-                <li class="listaItem"><a href="nosotros.html" target="_blank">Nosotros</a></li>
-                <li class="listaItem"><a href="productos.html" target="_blank">Productos</a></li>
-                <li class="listaItem"><a href="contacto.html" target="_blank">Contacto</a></li>
+                <li class="listaItem"><a href="{{ url_for('index') }}" target="_blank">Inicio</a></li>
+                <li class="listaItem"><a href="{{ url_for('nosotros') }}" target="_blank">Nosotros</a></li>
+                <li class="listaItem"><a href="{{ url_for('productos') }}" target="_blank">Productos</a></li>
+                <li class="listaItem"><a href="{{ url_for('contacto') }}" target="_blank">Contacto</a></li>
                 <li class="listaItem" id="inicio-sesion"><a href="login.html" target="_blank">Iniciar sesión</a></li>
                 <li class="listaItem" id="registro"><a href="register.html" target="_blank">Registrarse</a></li>
                 <!--<li class="listaItem">

@@ -19,18 +19,23 @@ mysql = MySQL(app)
 def index():
     return render_template("index.html")
 
-@app.route('/contacto.html')
+@app.route('/contacto')
 def contacto():
     return render_template("contacto.html")
 
-@app.route('/nosotros.html')
+@app.route('/nosotros')
 def nosotros():
     return render_template("nosotros.html")
 
-#todos los productos
-@app.route('/productos.html')
+@app.route('/productos')
 def productos():
-    return render_template("productos.html")
+    products = [
+        {"name": "Marca Modelo1", "imagen": "escritorioNeVH.jpeg", "price": "$10.000"},
+        {"name": "Marca Modelo2", "imagen": "escritorioNeVH.jpeg", "price": "$11.000"},
+        {"name": "Marca Modelo3", "imagen": "escritorioNeVH.jpeg", "price": "$12.000"},
+        {"name": "Marca Modelo4", "imagen": "escritorioNeVH.jpeg", "price": "$13.000"}
+    ]
+    return render_template('productos.html', products=products)
 
 #producto individual
 @app.route('/producto.html')
@@ -52,6 +57,7 @@ def register():
 @app.route('/carrito.html')
 def carrito():
     return render_template("carrito.html")
+
 
 @app.route('/usuario' , methods = ['POST'])
 def crearUsuario():
