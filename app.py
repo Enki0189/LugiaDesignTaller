@@ -31,7 +31,7 @@ def nosotros():
 def productos():
     cur = mysql.connection.cursor()
     # Ejecuta consulta SQL para obtener productos
-    cur.execute("SELECT NombreProducto, Descripcion, precio, stock FROM Productos")
+    cur.execute("SELECT NombreProducto, Descripcion, precio, stock, urlImagen FROM Productos")
     
     # Obtiene todos los resultados de la consulta
     db_products = cur.fetchall()
@@ -42,7 +42,7 @@ def productos():
         product_data = {
             "name": product[0],
             "descripcion": product[1], 
-            "imagen": "escritorioNeVH.jpeg", 
+            "imagen": product[4], 
             "price": "${:,.2f}".format(product[2]) 
         }
         products.append(product_data)
