@@ -98,6 +98,26 @@ def crearUsuario():
 
     return redirect(url_for('index'))
 
+@app.route('/usuario/login' , methods = ['POST'])
+def usuarioLogin():
+    email = request.form['email']
+    password = request.form['password']
+
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT email, contraseña FROM usuario WHERE email = %s', [email])
+        user = cur.fetchone()
+        if user and user[1] == password:  # Aquí simplemente se compara directamente, pero deberías usar hashing.
+            flash('Inicio de sesión correcto.', 'success')
+            return redirect(url_for('index'))
+        else:
+            flash('Usuario y/o contraseñas incorrectos. Por favor intenta nuevamente.', 'danger')
+    except Exception as e:
+        print(f"Error: {e}")
+        flash('Hubo un error al intentar iniciar sesión. Por favor intenta nuevamente.', 'danger')
+    
+    return redirect(url_for('login'))
+    
 
 #prueba de flask, no es necesario por ahora
 #user profile
