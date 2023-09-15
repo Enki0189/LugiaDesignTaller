@@ -50,23 +50,23 @@ def productos():
     return render_template('productos.html', products=products)
 
 #producto individual
-@app.route('/producto.html')
+@app.route('/producto')
 def producto():
     return render_template("producto.html")
 
-@app.route('/pagUsuario.html')
+@app.route('/pagUsuario')
 def pagUsuario():
     return render_template("pagUsuario.html")
 
-@app.route('/login.html')
+@app.route('/login')
 def login():
     return render_template("login.html")
 
-@app.route('/register.html')
+@app.route('/register')
 def register():
     return render_template("register.html")
 
-@app.route('/carrito.html')
+@app.route('/carrito')
 def carrito():
     return render_template("carrito.html")
 
