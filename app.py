@@ -91,12 +91,13 @@ def crearUsuario():
         cur.execute('INSERT INTO usuario (nombreUsuario, contraseña, rol, email, direccion, telefono, nombreYapellido, cuil, provincia) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)', (nombreUsuario, password, rol, email, direccion, telefono, nombreYapellido, personalId, provincia))
         mysql.connection.commit()
         flash('Usuario creado exitosamente!', 'success')
+        return redirect(url_for('index'))
     except Exception as e:
         mysql.connection.rollback()
         print(f"Error: {e}")
         flash('Hubo un error al crear el usuario. Por favor intenta nuevamente.', 'danger')
 
-    return redirect(url_for('index'))
+    return redirect(url_for('register'))
 
 @app.route('/usuario/login' , methods = ['POST'])
 def usuarioLogin():
