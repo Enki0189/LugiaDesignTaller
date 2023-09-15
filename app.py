@@ -1,12 +1,13 @@
 from flask import Flask, render_template
 from flask import Flask, request
 from flask_mysqldb import MySQL
+from flask import Flask, flash, render_template, request, redirect, url_for
 
 #flask instance
 app = Flask(__name__)
+app.secret_key = 'alguna_clave_secreta_y_dificil_de_adivinar'
 
 #configuracion base de datos
-
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = '010420'
@@ -73,7 +74,6 @@ def carrito():
 @app.route('/usuario' , methods = ['POST'])
 def crearUsuario():
     print('Se recibe solicitud de creacion de nuevo usuario.')
-    id = 3
     nombreUsuario = request.form['userName']
     password = request.form['password']
     nombre = request.form['nombre']
@@ -82,12 +82,22 @@ def crearUsuario():
     telefono = request.form['phone']
     direccion = request.form['address']
     provincia = request.form['province']
-    personalId = request.form['personalId']
     nombreYapellido = nombre + ' ' + apellido
+    personalId = request.form['personalId']
     rol = 1
-    cur = mysql.connection.cursor()
-    cur.execute('INSERT INTO usuario (idUsuario, nombreUsuario, contraseña, rol, email, direccion, telefono, nombreYapellido, cuil, provincia) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (id, nombreUsuario, password, rol, email, direccion, telefono, nombreYapellido, personalId, provincia))
-    mysql.connection.commit()
+    
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute('INSERT INTO usuario (nombreUsuario, contraseña, rol, email, direccion, telefono, nombreYapellido, cuil, provincia) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)', (nombreUsuario, password, rol, email, direccion, telefono, nombreYapellido, personalId, provincia))
+        mysql.connection.commit()
+        flash('Usuario creado exitosamente!', 'success')
+    except Exception as e:
+        mysql.connection.rollback()
+        print(f"Error: {e}")
+        flash('Hubo un error al crear el usuario. Por favor intenta nuevamente.', 'danger')
+
+    return redirect(url_for('index'))
+
 
 #prueba de flask, no es necesario por ahora
 #user profile
