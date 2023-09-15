@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask import Flask, request
 from flask_mysqldb import MySQL
 from flask import Flask, flash, render_template, request, redirect, url_for
+from flask import session
 
 #flask instance
 app = Flask(__name__)
@@ -109,6 +110,8 @@ def usuarioLogin():
         cur.execute('SELECT email, contraseña FROM usuario WHERE email = %s', [email])
         user = cur.fetchone()
         if user and user[1] == password:  # Aquí simplemente se compara directamente, pero deberías usar hashing.
+            session['logged_in'] = True
+            session['user_email'] = email
             flash('Inicio de sesión correcto.', 'success')
             return redirect(url_for('index'))
         else:
@@ -118,7 +121,13 @@ def usuarioLogin():
         flash('Hubo un error al intentar iniciar sesión. Por favor intenta nuevamente.', 'danger')
     
     return redirect(url_for('login'))
-    
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    session.pop('user_email', None)
+    flash('Has cerrado sesión.', 'success')
+    return redirect(url_for('index'))
 
 #prueba de flask, no es necesario por ahora
 #user profile

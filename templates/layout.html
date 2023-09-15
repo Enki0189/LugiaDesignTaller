@@ -32,18 +32,21 @@
                 <li class="listaItem"><a href="{{ url_for('nosotros') }}" target="_self">Nosotros</a></li>
                 <li class="listaItem"><a href="{{ url_for('productos') }}" target="_self">Productos</a></li>
                 <li class="listaItem"><a href="{{ url_for('contacto') }}" target="_self">Contacto</a></li>
-                <li class="listaItem" id="inicio-sesion"><a href="{{ url_for('login') }}" target="_self">Iniciar sesión</a></li>
-                <li class="listaItem" id="registro"><a href="{{ url_for('register') }}" target="_self">Registrarse</a></li>
+                {% if not session.get('logged_in') %}
+                    <li class="listaItem" id="inicio-sesion"><a href="{{ url_for('login') }}" target="_self">Iniciar sesión</a></li>
+                    <li class="listaItem" id="registro"><a href="{{ url_for('register') }}" target="_self">Registrarse</a></li>
+                {% else %}
+                    <li class="listaItem"><a href="{{ url_for('logout') }}" target="_self">Cerrar sesión</a></li>
+                {% endif %}
                 <li>
                     <div class="cart">
-                        <button id="botonCarrito" class="btn-carrito" data-bs-toggle="modal"
-                            data-bs-target="#modalCarrito">
+                        <button id="botonCarrito" class="btn-carrito" data-bs-toggle="modal" data-bs-target="#modalCarrito">
                             <i class='bi bi-cart-fill'></i>
                         </button>
                         <span id="item_total">0</span>
                     </div>
                 </li>
-            </ul>
+            </ul>            
         </nav>
         <!-- fin barra de navegacion -->
     </header>
