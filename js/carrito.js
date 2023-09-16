@@ -3,21 +3,28 @@
 let carrito = []; // Almacenar productos en el carrito
 
 function agregarAlCarrito(nombre, precio) {
-    // Buscar si el producto ya está en el carrito
-    const productoEnCarrito = carrito.find((item) => item.nombre === nombre);
-
-    if (productoEnCarrito) {
-        // Si ya existe, incrementar la cantidad
-        productoEnCarrito.cantidad++;
-    } else {
-        // Si no existe, agregarlo al carrito
-        carrito.push({ nombre, precio, cantidad: 1 });
-    }
-
+    // ...
+    
+    // Agregar el producto al carrito y enviarlo al servidor
+    fetch('/agregar-producto', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ nombre, precio })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.message); // Deberías recibir un mensaje de confirmación desde el servidor
+    })
+    .catch(error => {
+        console.error('Error al agregar producto al carrito:', error);
+    });
+    
     actualizarCarrito();
-    // Llama a esta función para inicializar el contador en cada página
     actualizarContadorCarrito();
 }
+
 
 function actualizarCarrito() {
     const carritoLista = document.getElementById('carritoLista');
@@ -39,7 +46,9 @@ function actualizarContadorCarrito() {
     carritoContador.textContent = carrito.length;
 }
 
-document.getElementById('finalizarCompra').addEventListener('click', () => {
+// ...
+
+document.getElementById('finalizarCompraBtn').addEventListener('click', () => {
     // Enviar los datos del carrito al servidor para iniciar el proceso de pago
     fetch('/iniciar-pago', {
         method: 'POST',
@@ -57,6 +66,7 @@ document.getElementById('finalizarCompra').addEventListener('click', () => {
         console.error('Error al iniciar el pago:', error);
     });
 });
+
 
 // Función para eliminar un producto del carrito (opcional)
 function eliminarDelCarrito(nombre) {

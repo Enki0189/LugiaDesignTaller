@@ -4,24 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/estilos.css">
-    <link rel="icon" type="image/vnd.microsoft.icon" href="Imagenes/iconoLugia.ico">
+    <link rel="stylesheet" href="/css/estilos.css">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="/Imagenes/iconoLugia.ico">
     <title>Lugia Design</title>
 </head>
 <body class="body">
     <header class="headerContainer">
         <nav class="navContainer">
-            <img src="./Imagenes/lugiaLogo.jpeg" alt="lugiaLogo" class="imagenNav">
+            <img src="/Imagenes/lugiaLogo.jpeg" alt="lugiaLogo" class="imagenNav">
             <ul class="listaContainer">
-                <li class="listaItem"><a href="index.html" target="_blank">Inicio</a></li>
-                <li class="listaItem"><a href="nosotros.html" target="_blank">Nosotros</a></li>
-                <li class="listaItem"><a href="local.html" target="_blank">Local</a></li>
-                <li class="listaItem"><a href="productos.html" target="_blank">Productos</a></li>
-                <li class="listaItem"><a href="contacto.html" target="_blank">Contacto</a></li>
+                <li class="listaItem"><a href="index.html">Inicio</a></li>
+                <li class="listaItem"><a href="nosotros.html">Nosotros</a></li>
+                <li class="listaItem"><a href="local.html">Local</a></li>
+                <li class="listaItem"><a href="productos.html">Productos</a></li>
+                <li class="listaItem"><a href="contacto.html">Contacto</a></li>
             </ul>
             <div class="carritoIcon">
                 <span id="carritoContador">0</span>
-                <img width="5%" src="./Imagenes/carrito-icon.png" alt="Carrito de compras" id="carritoImagen">
+                <img width="5%" src="/Imagenes/carrito-icon.png" alt="Carrito de compras" id="carritoImagen">
             </div>
         </nav>
     </header>
@@ -32,22 +32,22 @@
             <div class="productos">
                 <!-- Producto 1 -->
                 <div class="productoItem">
-                    <img src="Imagenes/escritorioNegroV2.jpeg" alt="EscritorioNegroV2" class="imagenProd">
+                    <img src="/Imagenes/escritorioNegroV2.jpeg" alt="EscritorioNegroV2" class="imagenProd">
                     <p class="precio">$20000</p>
                     <button class="agregarCarrito" onclick="agregarAlCarrito('Escritorio Negro V2', 20000)">Agregar al carrito</button>
                 </div>
                 <!-- Producto 2 -->
                 <div class="productoItem">
-                    <img src="Imagenes/escritorioBlancoT.jpeg" alt="EscritorioBlancoT" class="imagenProd">
+                    <img src="/Imagenes/escritorioBlancoT.jpeg" alt="EscritorioBlancoT" class="imagenProd">
                     <p class="precio">$25000</p>
                     <button class="agregarCarrito" onclick="agregarAlCarrito('Escritorio Blanco T', 25000)">Agregar al carrito</button>
                 </div>
-               <!-- Producto 3 -->
-               <div class="productoItem">
-                <img src="Imagenes/escritorioNegroT.jpeg" alt="escritorioNegroT" class="imagenProd">
-                <p class="precio">$18000</p>
-                <button class="agregarCarrito" onclick="agregarAlCarrito('escritorio Negro T', 18000)">Agregar al carrito</button>
-            </div>
+                <!-- Producto 3 -->
+                <div class="productoItem">
+                    <img src="/Imagenes/escritorioNegroT.jpeg" alt="escritorioNegroT" class="imagenProd">
+                    <p class="precio">$18000</p>
+                    <button class="agregarCarrito" onclick="agregarAlCarrito('escritorio Negro T', 18000)">Agregar al carrito</button>
+                </div>
             </div>
         </section>
         <p class="description">Nuestros escritorios están diseñados para...</p>
@@ -57,14 +57,15 @@
             <ul id="carritoLista">
                 <!-- Elementos del carrito se agregarán dinámicamente aquí -->
             </ul>
-            <p>Total: <span id="total">0</span></p>
-            <span><button id="finalizarCompra"></button></span>
-
+            <div class="finalizarCompra">
+                <p>Total: <span id="total">0</span></p>
+                <button id="finalizarCompraBtn">Finalizar Compra</button>
+            </div>
         </section>
     </main>
     <footer class="footer">
         <div class="footerContainer">
-            <img src="Imagenes/iconoLugia.ico" alt="logo" class="logoFooter">
+            <img src="/Imagenes/iconoLugia.ico" alt="logo" class="logoFooter">
             <nav class="navFooter">
                 <ul class="listaFooter">
                     <li><a href="https://web.whatsapp.com/" target="_blank">WhatsApp</a></li>
@@ -74,15 +75,29 @@
             </nav>
         </div>
     </footer>
-
-    <!--js-->
-    
-    <script src="./js/carrito.js"></script> <!-- Agrega un archivo JS separado para el manejo del carrito -->
-
+    <script src="/js/carrito.js"></script>
     <script src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"></script>
-    
     <script src="https://sdk.mercadopago.com/js/v2"></script>
 
-    
+    <script>
+        document.getElementById('finalizarCompraBtn').addEventListener('click', function() {
+            // Envía una solicitud AJAX al servidor Python para iniciar el pago
+            fetch('/iniciar-pago', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ carrito: productos }) // Asegúrate de que esto coincida con tu estructura de datos del carrito
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Redirige al usuario a la URL de MercadoPago para completar el pago
+                window.location.href = data.init_point;
+            })
+            .catch(error => {
+                console.error('Error al iniciar el pago:', error);
+            });
+        });
+    </script>
 </body>
 </html>
