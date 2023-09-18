@@ -69,7 +69,34 @@ def register():
 
 @app.route('/carrito')
 def carrito():
+    
     return render_template("carrito.html")
+
+@app.route('/abmProducto')
+def abmProducto():
+    return render_template("abmProducto.html")
+
+@app.route('/producto' , methods = ['POST'])
+def crearProducto():
+    print('Se recibe solicitud de creacion de nuevo usuario.')
+    nombreProducto = request.form['nombreProducto']
+    urlImagen = request.form['urlImagen']
+    descripcion = request.form['descripcion']
+    precio = request.form['precio']
+    stock = request.form['stock']
+    
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute('INSERT INTO productos (nombreProducto, descripcion, precio, stock, urlImagen) VALUES (%s, %s, %s, %s, %s)', (nombreProducto, descripcion, precio, stock, urlImagen))
+        mysql.connection.commit()
+        flash('Producto creado exitosamente!', 'success')
+        return redirect(url_for('productos'))
+    except Exception as e:
+        mysql.connection.rollback()
+        print(f"Error: {e}")
+        flash('Hubo un error al crear el producto. Por favor intenta nuevamente.', 'danger')
+
+    return redirect(url_for('abmProducto'))
 
 
 @app.route('/usuario' , methods = ['POST'])
