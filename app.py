@@ -134,11 +134,12 @@ def usuarioLogin():
 
     try:
         cur = mysql.connection.cursor()
-        cur.execute('SELECT email, contraseña FROM usuario WHERE email = %s', [email])
+        cur.execute('SELECT U.email, U.contraseña, R.descripcion FROM usuario U JOIN roles R ON U.rol = R.idRoles WHERE email = %s', [email])
         user = cur.fetchone()
         if user and user[1] == password:  # Aquí simplemente se compara directamente, pero deberías usar hashing.
             session['logged_in'] = True
             session['user_email'] = email
+            session['tipo_usuario'] = user[2]
             flash('Inicio de sesión correcto.', 'success')
             return redirect(url_for('index'))
         else:

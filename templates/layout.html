@@ -32,7 +32,9 @@
                 <li class="listaItem"><a href="{{ url_for('nosotros') }}" target="_self">Nosotros</a></li>
                 <li class="listaItem"><a href="{{ url_for('productos') }}" target="_self">Productos</a></li>
                 <li class="listaItem"><a href="{{ url_for('contacto') }}" target="_self">Contacto</a></li>
+                {% if session.get('tipo_usuario') ==  'Vendedor'%}
                 <li class="listaItem"><a href="{{ url_for('abmProducto') }}" target="_self">abmProducto</a></li>
+                {% endif %}
                 {% if not session.get('logged_in') %}
                     <li class="listaItem" id="inicio-sesion"><a href="{{ url_for('login') }}" target="_self">Iniciar sesión</a></li>
                     <li class="listaItem" id="registro"><a href="{{ url_for('register') }}" target="_self">Registrarse</a></li>
