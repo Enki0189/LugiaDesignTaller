@@ -154,6 +154,7 @@ def usuarioLogin():
 def logout():
     session.pop('logged_in', None)
     session.pop('user_email', None)
+    session.pop('tipo_usuario', None)
     flash('Has cerrado sesión.', 'success')
     return redirect(url_for('index'))
 
