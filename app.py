@@ -78,7 +78,7 @@ def abmProducto():
 
 @app.route('/producto' , methods = ['POST'])
 def crearProducto():
-    print('Se recibe solicitud de creacion de nuevo usuario.')
+    print('Se recibe solicitud de creacion de nuevo producto.')
     nombreProducto = request.form['nombreProducto']
     urlImagen = request.form['urlImagen']
     descripcion = request.form['descripcion']
@@ -98,6 +98,44 @@ def crearProducto():
 
     return redirect(url_for('abmProducto'))
 
+@app.route('/producto/<int:id>' , methods = ['PUT'])
+def crearProducto(idProducto):
+    print('Se recibe edicion de producto.')
+    nombreProducto = request.form['nombreProducto']
+    urlImagen = request.form['urlImagen']
+    descripcion = request.form['descripcion']
+    precio = request.form['precio']
+    stock = request.form['stock']
+    
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute('UPDATE productos SET nombreProducto = %s, descripcion = %s, precio = %s, stock = %s, urlImagen = %s WHERE idProductos = %s', (nombreProducto, descripcion, precio, stock, urlImagen, idProducto))
+        mysql.connection.commit()
+        flash('Producto actualizado exitosamente!', 'success')
+        return redirect(url_for('productos'))
+    except Exception as e:
+        mysql.connection.rollback()
+        print(f"Error: {e}")
+        flash('Hubo un error al actualizar el producto. Por favor intenta nuevamente.', 'danger')
+
+    return redirect(url_for('abmProducto'))
+
+@app.route('/producto/<int:id>' , methods = ['DELETE'])
+def crearProducto(idProducto):
+    print('Se recibe eliminacion de producto.')
+    
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute('DELETE FROM productos WHERE idProductos = %s', (idProducto))
+        mysql.connection.commit()
+        flash('Producto eliminado exitosamente!', 'success')
+        return redirect(url_for('productos'))
+    except Exception as e:
+        mysql.connection.rollback()
+        print(f"Error: {e}")
+        flash('Hubo un error al eliminar el producto. Por favor intenta nuevamente.', 'danger')
+
+    return redirect(url_for('abmProducto'))
 
 @app.route('/usuario' , methods = ['POST'])
 def crearUsuario():
