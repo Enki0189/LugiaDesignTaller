@@ -1,0 +1,94 @@
+{% extends 'layout.html'%} {% block body %}
+
+<script src="{{url_for('static', filename='./js/checkout.js')}}"></script>
+<script src="{{url_for('static', filename='./js/checkoutCard.js')}}"></script>
+<link rel="stylesheet" href="{{url_for('static', filename='/css/checkout.css')}}">
+<main class="checkout">
+
+    <h1 class="checkout_titulo">Finalizar Compra</h1>
+    <div class="checkout_contenido">
+        <!-- formulario -->
+        <form action="" class="form" id="form">
+            <!-- grupo nombre -->
+            <div class="form_grupo">
+                <label for="nombre" class="form_label">Nombre:</label>
+                <div class="form_grupo-input">
+                    <input id="nombre" type="text" name="name" class="form_input" placeholder="juan" required>
+                    <i class="form_validacion-estado fa-solid fa-circle-xmark"></i>
+                    <i class="form_validacion-estado fa-solid fa-circle-check"></i>
+                </div>
+                <p class="form_input-error">Nombre incorrecto, solo letras.</p>
+            </div>
+            <!-- grupo apellido -->
+            <div class="form_grupo">
+                <label for="surname" class="form_label">Apellido:</label>
+                <div class="form_grupo-input">
+                    <input id="surname" type="text" name="surname" class="form_input" placeholder="perez" required>
+                    <i class="form_validacion-estado fa-solid fa-circle-xmark"></i>
+                    <i class="form_validacion-estado fa-solid fa-circle-check"></i>
+                </div>
+                <p class="form_input-error">Apellido incorrecto, solo letras.</p>
+            </div>
+            <!-- grupo email -->
+            <div class="form_grupo">
+                <label for="email" class="form_label">Email:</label>
+                <div class="form_grupo-input">
+                    <input id="email" type="email" name="email" class="form_input" placeholder="correo@email.com" required>
+                    <i class="form_validacion-estado fa-solid fa-circle-xmark"></i>
+                    <i class="form_validacion-estado fa-solid fa-circle-check"></i>
+                </div>
+                <p class="form_input-error">El correo solo puede contener letras, numeros, punto y guion bajo</p>
+            </div>
+            <!-- grupo telefono -->
+            <div class="form_grupo">
+                <label for="phone" class="form_label">Telefono:</label>
+                <div class="form_grupo-input">
+                    <input id="phone" type="tel" name="phone" class="form_input" placeholder="11234545" required>
+                    <i class="form_validacion-estado fa-solid fa-circle-xmark"></i>
+                    <i class="form_validacion-estado fa-solid fa-circle-check"></i>
+                </div>
+                <p class="form_input-error">Numero incorrecto.</p>
+            </div>
+            <!-- grupo documento -->
+            <div class="form_grupo">
+                <label for="dni" class="form_label">Documento:</label>
+                <div class="form_grupo-input">
+                    <input id="dni" type="text" name="dni" class="form_input" maxlength="8" placeholder="34919292" required>
+                    <i class="form_validacion-estado fa-solid fa-circle-xmark"></i>
+                    <i class="form_validacion-estado fa-solid fa-circle-check"></i>
+                </div>
+                <p class="form_input-error">Documento incorrecto.</p>
+            </div>
+            <div class="form_mensajeError" id="form_mensajeError">
+                <p><i class="fa-solid fa-triangle-exclamation"></i> <b>Error:</b> Rellene el forulario correctamente.</p>
+            </div>
+            <div class="form_grupo form_grupo-btn">
+                <button class="form_btn" type="submit"> Pagar con MercadoPago</button>
+                <p class="form_mensaje-exito">Formulario exitoso!!!</p>
+            </div>
+        </form>
+        <div class="checkout_card">
+            <div class="checkout_card-contenido">
+                <h2>Pedido</h2>
+                <div></div>
+                <table id="checkout-product" class="checkout_table-product">
+                </table>
+                <hr>
+                <table class="checkout_table-precio">
+                    <tr class="checkout_table-fila table-subtotal">
+                        <td class="t1">Subtotal</td>
+                        <td id="checkout-subtotal">$00</td>
+                    </tr>
+                    <tr class="checkout_table-fila table-total">
+                        <td class="t1">Total</td>
+                        <td id="checkout-total">$00</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+{% endblock%}

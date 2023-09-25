@@ -4,6 +4,29 @@ from flask_mysqldb import MySQL
 from flask import Flask, flash, render_template, request, redirect, url_for
 from flask import session
 
+
+# SDK de Mercado Pago
+import mercadopago
+# Agrega credenciales
+sdk = mercadopago.SDK("PROD_ACCESS_TOKEN")
+
+
+# Crea un ítem en la preferencia
+preference_data = {
+    "items": [
+        {
+            "title": "escritorio",
+            "quantity": 1,
+            "unit_price": 75.76,
+        }
+    ]
+}
+
+preference_response = sdk.preference().create(preference_data)
+preference = preference_response["response"]
+
+
+
 #flask instance
 app = Flask(__name__)
 app.secret_key = 'alguna_clave_secreta_y_dificil_de_adivinar'
@@ -70,6 +93,10 @@ def register():
 @app.route('/carrito')
 def carrito():
     return render_template("carrito.html")
+
+@app.route('/products_mp')
+def products_mp():
+    return render_template("products_mp.html")
 
 
 @app.route('/usuario' , methods = ['POST'])
