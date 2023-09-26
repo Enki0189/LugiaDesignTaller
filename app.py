@@ -11,7 +11,7 @@ app.secret_key = 'alguna_clave_secreta_y_dificil_de_adivinar'
 #configuracion base de datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '010420'
+app.config['MYSQL_PASSWORD'] = '6277Horde'
 app.config['MYSQL_DB'] = 'lugia_design'
 
 mysql = MySQL(app)
@@ -98,8 +98,9 @@ def crearProducto():
 
     return redirect(url_for('abmProducto'))
 
+
 @app.route('/producto/<int:id>' , methods = ['PUT'])
-def crearProducto(idProducto):
+def editarProducto(idProducto):
     print('Se recibe edicion de producto.')
     nombreProducto = request.form['nombreProducto']
     urlImagen = request.form['urlImagen']
@@ -121,7 +122,7 @@ def crearProducto(idProducto):
     return redirect(url_for('abmProducto'))
 
 @app.route('/producto/<int:id>' , methods = ['DELETE'])
-def crearProducto(idProducto):
+def borrarProducto(idProducto):
     print('Se recibe eliminacion de producto.')
     
     try:
