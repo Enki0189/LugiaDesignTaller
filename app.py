@@ -1,4 +1,6 @@
 from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
+import mercadopago
 
 #flask instance
 app = Flask(__name__)
@@ -46,10 +48,6 @@ if __name__ == '__main__':
 
 #-----------.............-----------carrito -------------...............-----------------------
 
-from flask import Flask, render_template, request, jsonify
-import mercadopago
-
-app = Flask(__name__)
 
 # Configura tu token de acceso de MercadoPago
 ACCESS_TOKEN = 'TEST-6306101317624376-060219-a45c93a10a3aef2fcf5a3df0561fe9d3-207146047'
@@ -59,28 +57,33 @@ sdk = mercadopago.SDK(ACCESS_TOKEN)
 # Lista de productos (para simular el carrito)
 productos = []
 
-@app.route('/')
+@app.route('/productos')
 def index():
-    return render_template('index.html')
+    return render_template('productos.html')
+
+
+def calcular_total_carrito(carrito):
+    total = sum(producto['precio'] * producto['cantidad'] for producto in carrito)
+    return total
 
 @app.route('/iniciar-pago', methods=['POST'])
 def iniciar_pago():
     global productos
-
     # Recibe los datos del carrito desde la solicitud AJAX
     carrito_data = request.get_json()
 
-    # Prepara los datos del pago para MercadoPago
     payment_data = {
-        "transaction_amount": calcular_total_carrito(productos),  # Implementa esta función
-        "token": "CARD_TOKEN",  # Debes obtener el token de la tarjeta de algún lugar
+        "transaction_amount": calcular_total_carrito(productos),
+        "token": "CARD_TOKEN",
         "description": "Descripción del pago",
         "payment_method_id": 'visa',
         "installments": 1,
         "payer": {
             "email": 'test_user_123456@testuser.com'
-        }
+        } 
     }
+    
+
 
     # Crea el pago en MercadoPago
     result = sdk.payment().create(payment_data)
@@ -89,7 +92,7 @@ def iniciar_pago():
     # Limpia el carrito después de completar el pago
     productos = []
 
-    return jsonify({"init_point": payment['transaction_details']['external_resource_url']})
+    return jsonify({"init_point": "  https://api.mercadopago.com/V1/payments"})   
 
 @app.route('/agregar-producto', methods=['POST'])
 def agregar_producto():
