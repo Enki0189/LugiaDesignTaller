@@ -4,27 +4,10 @@ from flask_mysqldb import MySQL
 from flask import Flask, flash, render_template, request, redirect, url_for
 from flask import session
 
-
 # SDK de Mercado Pago
 import mercadopago
 # Agrega credenciales
-sdk = mercadopago.SDK("PROD_ACCESS_TOKEN")
-
-
-# Crea un ítem en la preferencia
-preference_data = {
-    "items": [
-        {
-            "title": "escritorio",
-            "quantity": 1,
-            "unit_price": 75.76,
-        }
-    ]
-}
-
-preference_response = sdk.preference().create(preference_data)
-preference = preference_response["response"]
-
+sdk = mercadopago.SDK("APP_USR-2668653040880546-091716-bbcb8f8503c6715854fdc44f002834f9-1482234495")
 
 
 #flask instance
@@ -34,7 +17,7 @@ app.secret_key = 'alguna_clave_secreta_y_dificil_de_adivinar'
 #configuracion base de datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '010420'
+app.config['MYSQL_PASSWORD'] = '6277Horde'
 app.config['MYSQL_DB'] = 'lugia_design'
 
 mysql = MySQL(app)
@@ -43,6 +26,10 @@ mysql = MySQL(app)
 @app.route('/')
 def index():
     return render_template("index.html")
+
+@app.route('/flask', methods='GET')
+def flaskServer():
+    return "flask server"
 
 @app.route('/contacto')
 def contacto():
@@ -56,7 +43,7 @@ def nosotros():
 def productos():
     cur = mysql.connection.cursor()
     # Ejecuta consulta SQL para obtener productos
-    cur.execute("SELECT NombreProducto, Descripcion, precio, stock, urlImagen FROM Productos")
+    cur.execute("SELECT NombreProducto, Descripcion, precio, stock, urlImagen, idProductos FROM Productos")
     
     # Obtiene todos los resultados de la consulta
     db_products = cur.fetchall()
@@ -68,10 +55,48 @@ def productos():
             "name": product[0],
             "descripcion": product[1], 
             "imagen": product[4], 
-            "price": "${:,.2f}".format(product[2]) 
+            "price": "${:,.2f}".format(product[2]),
+            "id": product[5]
         }
         products.append(product_data)
+    #session["cart"] = []
+    #session["totalprice"] = 0
+    session["productosCargados"] = products    
     return render_template('productos.html', products=products)
+
+@app.route('/add_to_cart', methods=["POST"])
+def add_to_cart():
+    itemId = int(request.form["id"])
+    session["cart"].append(session["productosCargados"][itemId-1])
+    productPrice = float(session["productosCargados"][itemId-1]["price"].replace('$','').replace(',', ''))
+    session["totalprice"] = session["totalprice"] + productPrice
+    print(session["totalprice"])
+    print(session["cart"])
+    return redirect(url_for('productos'))
+
+
+@app.route('/carrito')
+def carrito():
+    """productos_carrito = []
+    if session["cart"] != []:
+        print("hay algo")
+        for product in session["cart"]:
+            producto_carrito = {
+                "nombre": product["name"],
+                "precio_unit": product["price"],
+                "id": product["id"]
+            }
+            productos_carrito.append(producto_carrito)        
+    else:
+        print("vacio")
+    print(productos_carrito)"""
+    return render_template("carrito.html")
+
+@app.route('/empty_cart')
+def empty_cart():
+    session["cart"] = []
+    session["totalprice"] = 0
+    return render_template("carrito.html")
 
 #producto individual
 @app.route('/producto')
@@ -89,10 +114,6 @@ def login():
 @app.route('/register')
 def register():
     return render_template("register.html")
-
-@app.route('/carrito')
-def carrito():
-    return render_template("carrito.html")
 
 @app.route('/products_mp')
 def products_mp():
@@ -155,6 +176,26 @@ def logout():
     session.pop('user_email', None)
     flash('Has cerrado sesión.', 'success')
     return redirect(url_for('index'))
+
+
+@app.route('/generar')
+def payment(req):
+    # Crea un ítem en la preferencia
+    preference_data = {
+        "items": [
+            {
+                #esto es de prueba, más adelante tomar info de BD
+                "title": "Escritorio",
+                "description": "escritorio gamer",
+                "unit_price": 100,
+                "currency_id": "ARS",
+                "quantity": 1,
+            }
+        ]
+    }
+
+    preference_response = sdk.preference().create(preference_data)
+    preference = preference_response["response"]
 
 #prueba de flask, no es necesario por ahora
 #user profile

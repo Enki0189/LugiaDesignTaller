@@ -5,12 +5,19 @@
         <div id="allcards" class="row">
             {% for product in products %}
             <div class="card col-lg-4 col-12">
+
                 <h2>{{ product.name }}</h2>
-                <img src="{{url_for('static', filename='Imagenes/' + product.imagen)}}"
-                    alt="{{ product.imagen.split('.')[0] }}" class="imagenProd">
+                <img src="{{url_for('static', filename='Imagenes/' + product.imagen)}}" alt="{{ product.imagen.split('.')[0] }}" class="imagenProd">
                 <p class="p-size">{{ product.descripcion }}</p>
                 <p class="p-size">{{ product.price }}</p>
-                <button class="btn add-to-cart">Agregar</button>
+                <form method="post" action="/add_to_cart">
+                    <button class="btn add-to-cart">Agregar</button>
+                    <div class="add-to-cart">
+                        <input type="hidden" name="id" value="{{product.id}}" />
+                        <input type="submit" value="Comprar" class="btn-check">
+                    </div>
+                </form>
+
             </div>
             {% endfor %}
         </div>

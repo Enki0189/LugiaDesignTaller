@@ -7,6 +7,26 @@
     <span id="item_total">0</span>
 </div>
 
+<div class="cart-body">
+    <table class="table">
+        <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Cantidad</th>
+            <th>Precio unitario</th>
+        </tr>
+        <tr>
+            {% for product in session["cart"] %}
+            <td id="nombre">{{product.name}}</td>
+            <td id="descripcion">{{product.descripcion}}</td>
+            <td id="cantidad">1</td>
+            <td id="precio">{{product.price}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+
 <!-- Modal carrito vacío -->
 <div class="modal fade" id="modalCarrito" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -15,11 +35,31 @@
                 <h3 class="modal-title" id="exampleModalLabel">Carrito</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
+            <div class="cart-body">
+                <table class="table">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Precio unitario</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <td>Escritorio</td>
+                            <td>1</td>
+                            <td>100</td>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+
+
             <div id="bodyCarrito">
                 <p class="p-size">Carrito vacio</p>
             </div>
             <div id="btnModal" class="modal-footer"></div>
         </div>
     </div>
+</div>
 </div>
 {% endblock%}
