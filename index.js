@@ -1,22 +1,37 @@
 const express = require('express');
 const http = require('http');
 const cors = require('cors');
+const request = require('request')
 const app = express();
 const bodyParser = require('body-parser');
 
-app.set('port', 3003)
-
-
+//app.set('port', 3300)
+const PORT = 3300;
 
 app.use(cors({
     origin: '*',
 }));
+
+app.get('/home', function(req, res) {
+    request('http://127.0.0.1:3000/flask', function(error, response, body) {
+        console.error('error:', error); // Print the error
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        console.log('body:', body); // Print the data received
+        res.send(body); //Display the response on the website
+    });
+});
+
+app.listen(PORT, function() {
+    console.log('Listening on Port 3000');
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/generar', (req, res) => {
     // Crea un objeto de preferencia
+    let nombre = document.getElementById("nombre");
+    //console.log(nombre)
     let preference = {
         back_urls: {
             success: 'http://localhost:3003/success'
@@ -73,7 +88,6 @@ app.post('/notificar', async(req, res) => {
             merchantOrder = await mercadopago.merchant_orders.findById(orderId);
             break;
     }
-
 
     //esta parte es del tutorial, tira error y no encuentro qué le pasa, pero hasta antes de esto todo funciona
     //console.log(merchantOrder.body.payment);
