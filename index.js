@@ -5,13 +5,16 @@ const request = require('request')
 const app = express();
 const bodyParser = require('body-parser');
 
-//app.set('port', 3300)
-const PORT = 3300;
+app.set('port', 3003)
 
 app.use(cors({
     origin: '*',
 }));
 
+
+//esto es lo que estaba intentando para conectar con Flask pero no me terminó de salir
+/*
+//const PORT = 3003;
 app.get('/home', function(req, res) {
     request('http://127.0.0.1:3000/flask', function(error, response, body) {
         console.error('error:', error); // Print the error
@@ -22,22 +25,23 @@ app.get('/home', function(req, res) {
 });
 
 app.listen(PORT, function() {
-    console.log('Listening on Port 3000');
-});
+    console.log('Listening on Port 3003');
+});*/
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/generar', (req, res) => {
-    // Crea un objeto de preferencia
-    let nombre = document.getElementById("nombre");
+    //acá es donde intentaría tomar la info de producto elegido en el carrito de flask
+    //let nombre = document.getElementById("nombre");
     //console.log(nombre)
+    // Crea un objeto de preferencia
     let preference = {
         back_urls: {
             success: 'http://localhost:3003/success'
         },
         items: [{
-            //acá podría ir con el nombre desde la base de datos o un json el title (escritorio.nombre por ej)
+            //acá falta tomar la info desde el producto que se carga en flask
             title: "Escritorio",
             description: "escritorio gamer",
             unit_price: 100,

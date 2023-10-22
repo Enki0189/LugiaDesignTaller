@@ -17,7 +17,7 @@ app.secret_key = 'alguna_clave_secreta_y_dificil_de_adivinar'
 #configuracion base de datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '6277Horde'
+app.config['MYSQL_PASSWORD'] = '******'
 app.config['MYSQL_DB'] = 'lugia_design'
 
 mysql = MySQL(app)
@@ -27,9 +27,10 @@ mysql = MySQL(app)
 def index():
     return render_template("index.html")
 
-@app.route('/flask', methods='GET')
+''' este es el método que intenté usar para la conexión con Node
+@app.route('/flask', methods=['GET'])
 def flaskServer():
-    return "flask server"
+    return "flask server"'''
 
 @app.route('/contacto')
 def contacto():
