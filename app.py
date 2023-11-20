@@ -17,7 +17,10 @@ app.secret_key = 'alguna_clave_secreta_y_dificil_de_adivinar'
 #configuracion base de datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
+
 app.config['MYSQL_PASSWORD'] = '010420'
+
+
 app.config['MYSQL_DB'] = 'lugia_design'
 
 mysql = MySQL(app)
@@ -74,8 +77,11 @@ def add_to_cart():
     itemId = int(request.form["id"])
     print(session["productosCargados"][itemId-1])
     session["cart"].append(session["productosCargados"][itemId-1])
+
     productPrice = session["productosCargados"][itemId-1]["price"].replace('$','').replace(',', '')
     session["totalprice"] = float(session["totalprice"]) + float(productPrice)
+
+
     print(session["totalprice"])
     print(session["cart"])
     return redirect(url_for('productos'))
