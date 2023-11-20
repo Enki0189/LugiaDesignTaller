@@ -41,7 +41,7 @@
                         <button id="botonCarrito" class="btn-carrito" data-bs-toggle="modal" data-bs-target="#modalCarrito">
                             <i class='bi bi-cart-fill'></i>
                         </button>
-                        <span id="item_total">0</span>
+                        <span id="item_total">${% if session.get('totalprice') %} {{session.get('totalprice')}} {% else %} 0 {% endif %}</span>
                     </div>
                 </li>
             </ul>
@@ -76,9 +76,26 @@
                 <div class="modal-header">
                     <h3 class="modal-title" id="exampleModalLabel">Carrito</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
                 <div id="bodyCarrito">
-                    <p class="p-size">Carrito vacio</p>
+                    <div class="cart-body">
+                        <table class="table">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Cantidad</th>
+                                <th>Precio unitario</th>
+                            </tr>
+                            {% for product in session["cart"] %}
+                            <tr>
+                                <td id="nombre">{{product.name}}</td>
+                                <td id="descripcion">{{product.descripcion}}</td>
+                                <td id="cantidad">1</td>
+                                <td id="precio">{{product.price}}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        <button>comprar</button>
+                    </div>
                 </div>
                 <div id="btnModal" class="modal-footer"></div>
             </div>

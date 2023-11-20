@@ -17,7 +17,7 @@ app.secret_key = 'alguna_clave_secreta_y_dificil_de_adivinar'
 #configuracion base de datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '****'
+app.config['MYSQL_PASSWORD'] = '010420'
 app.config['MYSQL_DB'] = 'lugia_design'
 
 mysql = MySQL(app)
@@ -60,17 +60,22 @@ def productos():
             "id": product[5]
         }
         products.append(product_data)
-    #session["cart"] = []
-    #session["totalprice"] = 0
+    print("Creando carro vacio")
+    if "cart" not in session :
+        session["cart"] = []
+    print(session["cart"])
+    if "totalprice" not in session :
+        session["totalprice"] = 0
     session["productosCargados"] = products    
     return render_template('productos.html', products=products)
 
 @app.route('/add_to_cart', methods=["POST"])
 def add_to_cart():
     itemId = int(request.form["id"])
+    print(session["productosCargados"][itemId-1])
     session["cart"].append(session["productosCargados"][itemId-1])
     productPrice = session["productosCargados"][itemId-1]["price"].replace('$','').replace(',', '')
-    session["totalprice"] = session["totalprice"] + productPrice
+    session["totalprice"] = float(session["totalprice"]) + float(productPrice)
     print(session["totalprice"])
     print(session["cart"])
     return redirect(url_for('productos'))
@@ -78,7 +83,7 @@ def add_to_cart():
 
 @app.route('/carrito')
 def carrito():
-    """productos_carrito = []
+    productos_carrito = []
     if session["cart"] != []:
         print("hay algo")
         for product in session["cart"]:
@@ -90,7 +95,7 @@ def carrito():
             productos_carrito.append(producto_carrito)        
     else:
         print("vacio")
-    print(productos_carrito)"""
+    print(productos_carrito)
     return render_template("carrito.html")
 
 @app.route('/empty_cart')
