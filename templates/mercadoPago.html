@@ -1,9 +1,6 @@
-<html>
-<head>
-    <script src="https://sdk.mercadopago.com/js/v2">
-    </script>
-</head>
-<body>
+{% extends 'layout.html'%} {% block body %}
+
+<main>
     <div id="wallet_container">
     </div>
     <script>
@@ -16,9 +13,9 @@
             preferenceId: '{{session.get('preferenceId')}}',
         },
       });
-  </script>
-</body>
-</html>
+    </script>
+</main>
+{% endblock%}
         
 
 
