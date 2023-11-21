@@ -4,6 +4,12 @@ from flask_mysqldb import MySQL
 from flask import Flask, flash, render_template, request, redirect, url_for
 from flask import session
 
+# SDK de Mercado Pago
+import mercadopago
+# Agrega credenciales
+sdk = mercadopago.SDK("TEST-7239674602195698-111913-edff4bc486e52b9e57f185f6a334ac94-311156457")
+
+
 #flask instance
 app = Flask(__name__)
 app.secret_key = 'alguna_clave_secreta_y_dificil_de_adivinar'
@@ -11,7 +17,10 @@ app.secret_key = 'alguna_clave_secreta_y_dificil_de_adivinar'
 #configuracion base de datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '6277Horde'
+
+app.config['MYSQL_PASSWORD'] = '010420'
+
+
 app.config['MYSQL_DB'] = 'lugia_design'
 
 mysql = MySQL(app)
@@ -20,6 +29,11 @@ mysql = MySQL(app)
 @app.route('/')
 def index():
     return render_template("index.html")
+
+''' este es el método que intenté usar para la conexión con Node
+@app.route('/flask', methods=['GET'])
+def flaskServer():
+    return "flask server"'''
 
 @app.route('/contacto')
 def contacto():
@@ -33,7 +47,7 @@ def nosotros():
 def productos():
     cur = mysql.connection.cursor()
     # Ejecuta consulta SQL para obtener productos
-    cur.execute("SELECT NombreProducto, Descripcion, precio, stock, urlImagen FROM Productos")
+    cur.execute("SELECT NombreProducto, Descripcion, precio, stock, urlImagen, idProductos FROM Productos")
     
     # Obtiene todos los resultados de la consulta
     db_products = cur.fetchall()
@@ -45,10 +59,56 @@ def productos():
             "name": product[0],
             "descripcion": product[1], 
             "imagen": product[4], 
-            "price": "${:,.2f}".format(product[2]) 
+            "price": "${:,.2f}".format(product[2]),
+            "id": product[5]
         }
         products.append(product_data)
+    print("Creando carro vacio")
+    if "cart" not in session :
+        session["cart"] = []
+    print(session["cart"])
+    if "totalprice" not in session :
+        session["totalprice"] = 0
+    session["productosCargados"] = products    
     return render_template('productos.html', products=products)
+
+@app.route('/add_to_cart', methods=["POST"])
+def add_to_cart():
+    itemId = int(request.form["id"])
+    print(session["productosCargados"][itemId-1])
+    session["cart"].append(session["productosCargados"][itemId-1])
+
+    productPrice = session["productosCargados"][itemId-1]["price"].replace('$','').replace(',', '')
+    session["totalprice"] = float(session["totalprice"]) + float(productPrice)
+
+
+    print(session["totalprice"])
+    print(session["cart"])
+    return redirect(url_for('productos'))
+
+
+@app.route('/carrito')
+def carrito():
+    productos_carrito = []
+    if session["cart"] != []:
+        print("hay algo")
+        for product in session["cart"]:
+            producto_carrito = {
+                "nombre": product["name"],
+                "precio_unit": product["price"],
+                "id": product["id"]
+            }
+            productos_carrito.append(producto_carrito)        
+    else:
+        print("vacio")
+    print(productos_carrito)
+    return render_template("carrito.html")
+
+@app.route('/empty_cart')
+def empty_cart():
+    session["cart"] = []
+    session["totalprice"] = 0
+    return render_template("carrito.html")
 
 #producto individual
 @app.route('/producto')
@@ -67,10 +127,9 @@ def login():
 def register():
     return render_template("register.html")
 
-@app.route('/carrito')
-def carrito():
-    
-    return render_template("carrito.html")
+@app.route('/products_mp')
+def products_mp():
+    return render_template("products_mp.html")
 
 @app.route('/abmProducto')
 def abmProducto():
@@ -196,6 +255,87 @@ def logout():
     session.pop('tipo_usuario', None)
     flash('Has cerrado sesión.', 'success')
     return redirect(url_for('index'))
+
+@app.route('/checkout', methods=['POST'])
+def checkout():
+    #nombres = request.form.getlist('nombre[]')
+    #descripciones = request.form.getlist('descripcion[]')
+    #cantidades = request.form.getlist('cantidad[]')
+    #precios = request.form.getlist('precio[]')
+
+    # Hacer algo con los datos, como procesar la compra, almacenar en la base de datos, etc.
+    
+    items = []
+    print(f'Sesion cart: {session["cart"]}')
+    for product in session["cart"]:
+            items.append({
+                "title": product["name"],
+                "description": product["descripcion"],
+                "unit_price": float(product["price"].replace('$','').replace(',', '')),
+                "currency_id": "ARS",
+                "quantity": 1,
+            })
+    print(f"Items: {items}")
+
+    preference_data = {
+        "items": items,
+        "payer": {
+            "name": "João",
+            "surname": "Silva",
+            "email": "user@email.com",
+            "phone": {
+                "area_code": "11",
+                "number": "4444-4444"
+            },
+            "identification": {
+                "type": "CPF",
+                "number": "19119119100"
+            },
+            "address": {
+                "street_name": "Street",
+                "street_number": 123,
+                "zip_code": "06233200"
+            }
+        },
+        "back_urls": {
+            "success": "http://localhost:5000/",
+            "failure": "http://localhost:5000/",
+            "pending": "http://localhost:5000/productos"
+        },
+        "auto_return": "approved",
+        "payment_methods": {
+          "excluded_payment_methods": [],
+          "excluded_payment_types": [],
+          "installments": 3
+        }
+    }
+    
+    reference_response = sdk.preference().create(preference_data)
+    preference_id = reference_response['response']['id']
+    
+    session["preferenceId"] = preference_id
+    # Puedes redirigir a otra página después de procesar los datos
+    return render_template('mercadoPago.html')
+
+
+@app.route('/generar')
+def payment(req):
+    # Crea un ítem en la preferencia
+    preference_data = {
+        "items": [
+            {
+                #esto es de prueba, más adelante tomar info de BD
+                "title": "Escritorio",
+                "description": "escritorio gamer",
+                "unit_price": 100,
+                "currency_id": "ARS",
+                "quantity": 1,
+            }
+        ]
+    }
+
+    preference_response = sdk.preference().create(preference_data)
+    preference = preference_response["response"]
 
 #prueba de flask, no es necesario por ahora
 #user profile
