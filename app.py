@@ -7,7 +7,7 @@ from flask import session
 # SDK de Mercado Pago
 import mercadopago
 # Agrega credenciales
-sdk = mercadopago.SDK("APP_USR-2668653040880546-091716-bbcb8f8503c6715854fdc44f002834f9-1482234495")
+sdk = mercadopago.SDK("TEST-7239674602195698-111913-edff4bc486e52b9e57f185f6a334ac94-311156457")
 
 
 #flask instance
@@ -188,6 +188,67 @@ def logout():
     session.pop('user_email', None)
     flash('Has cerrado sesión.', 'success')
     return redirect(url_for('index'))
+
+@app.route('/checkout', methods=['POST'])
+def checkout():
+    #nombres = request.form.getlist('nombre[]')
+    #descripciones = request.form.getlist('descripcion[]')
+    #cantidades = request.form.getlist('cantidad[]')
+    #precios = request.form.getlist('precio[]')
+
+    # Hacer algo con los datos, como procesar la compra, almacenar en la base de datos, etc.
+    
+    items = []
+    print(f'Sesion cart: {session["cart"]}')
+    for product in session["cart"]:
+            items.append({
+                "title": product["name"],
+                "description": product["descripcion"],
+                "unit_price": float(product["price"].replace('$','').replace(',', '')),
+                "currency_id": "ARS",
+                "quantity": 1,
+            })
+    print(f"Items: {items}")
+
+    preference_data = {
+        "items": items,
+        "payer": {
+            "name": "João",
+            "surname": "Silva",
+            "email": "user@email.com",
+            "phone": {
+                "area_code": "11",
+                "number": "4444-4444"
+            },
+            "identification": {
+                "type": "CPF",
+                "number": "19119119100"
+            },
+            "address": {
+                "street_name": "Street",
+                "street_number": 123,
+                "zip_code": "06233200"
+            }
+        },
+        "back_urls": {
+            "success": "http://localhost:5000/",
+            "failure": "http://localhost:5000/",
+            "pending": "http://localhost:5000/productos"
+        },
+        "auto_return": "approved",
+        "payment_methods": {
+          "excluded_payment_methods": [],
+          "excluded_payment_types": [],
+          "installments": 3
+        }
+    }
+    
+    reference_response = sdk.preference().create(preference_data)
+    preference_id = reference_response['response']['id']
+    
+    session["preferenceId"] = preference_id
+    # Puedes redirigir a otra página después de procesar los datos
+    return render_template('mercadoPago.html')
 
 
 @app.route('/generar')

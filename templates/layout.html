@@ -16,6 +16,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="./js/carrito.js"></script>
     <script src="{{url_for('static', filename='/js/index.js')}}"></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <title>Lugia Design</title>
 </head>
 
@@ -76,27 +77,29 @@
                 <div class="modal-header">
                     <h3 class="modal-title" id="exampleModalLabel">Carrito</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div id="bodyCarrito">
-                    <div class="cart-body">
-                        <table class="table">
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Descripcion</th>
-                                <th>Cantidad</th>
-                                <th>Precio unitario</th>
-                            </tr>
-                            {% for product in session["cart"] %}
-                            <tr>
-                                <td id="nombre">{{product.name}}</td>
-                                <td id="descripcion">{{product.descripcion}}</td>
-                                <td id="cantidad">1</td>
-                                <td id="precio">{{product.price}}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                        <button>comprar</button>
+                    <div id="bodyCarrito">
+                        <div class="cart-body">
+                            <form method="post" action="/checkout">
+                                <table class="table">
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Descripcion</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio unitario</th>
+                                    </tr>
+                                    {% for product in session["cart"] %}
+                                    <tr>
+                                        <td id="nombre">{{product.name}}</td>
+                                        <td id="descripcion">{{product.descripcion}}</td>
+                                        <td id="cantidad">1</td>
+                                        <td id="precio">{{product.price}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                                <button type="submit">Comprar</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
                 <div id="btnModal" class="modal-footer"></div>
             </div>
         </div>
