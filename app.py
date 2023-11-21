@@ -131,6 +131,71 @@ def register():
 def products_mp():
     return render_template("products_mp.html")
 
+@app.route('/abmProducto')
+def abmProducto():
+    return render_template("abmProducto.html")
+
+@app.route('/producto' , methods = ['POST'])
+def crearProducto():
+    print('Se recibe solicitud de creacion de nuevo producto.')
+    nombreProducto = request.form['nombreProducto']
+    urlImagen = request.form['urlImagen']
+    descripcion = request.form['descripcion']
+    precio = request.form['precio']
+    stock = request.form['stock']
+    
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute('INSERT INTO productos (nombreProducto, descripcion, precio, stock, urlImagen) VALUES (%s, %s, %s, %s, %s)', (nombreProducto, descripcion, precio, stock, urlImagen))
+        mysql.connection.commit()
+        flash('Producto creado exitosamente!', 'success')
+        return redirect(url_for('productos'))
+    except Exception as e:
+        mysql.connection.rollback()
+        print(f"Error: {e}")
+        flash('Hubo un error al crear el producto. Por favor intenta nuevamente.', 'danger')
+
+    return redirect(url_for('abmProducto'))
+
+
+@app.route('/producto/<int:id>' , methods = ['PUT'])
+def editarProducto(idProducto):
+    print('Se recibe edicion de producto.')
+    nombreProducto = request.form['nombreProducto']
+    urlImagen = request.form['urlImagen']
+    descripcion = request.form['descripcion']
+    precio = request.form['precio']
+    stock = request.form['stock']
+    
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute('UPDATE productos SET nombreProducto = %s, descripcion = %s, precio = %s, stock = %s, urlImagen = %s WHERE idProductos = %s', (nombreProducto, descripcion, precio, stock, urlImagen, idProducto))
+        mysql.connection.commit()
+        flash('Producto actualizado exitosamente!', 'success')
+        return redirect(url_for('productos'))
+    except Exception as e:
+        mysql.connection.rollback()
+        print(f"Error: {e}")
+        flash('Hubo un error al actualizar el producto. Por favor intenta nuevamente.', 'danger')
+
+    return redirect(url_for('abmProducto'))
+
+@app.route('/producto/<int:id>' , methods = ['DELETE'])
+def borrarProducto(idProducto):
+    print('Se recibe eliminacion de producto.')
+    
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute('DELETE FROM productos WHERE idProductos = %s', (idProducto))
+        mysql.connection.commit()
+        flash('Producto eliminado exitosamente!', 'success')
+        return redirect(url_for('productos'))
+    except Exception as e:
+        mysql.connection.rollback()
+        print(f"Error: {e}")
+        flash('Hubo un error al eliminar el producto. Por favor intenta nuevamente.', 'danger')
+
+    return redirect(url_for('abmProducto'))
 
 @app.route('/usuario' , methods = ['POST'])
 def crearUsuario():
@@ -167,11 +232,12 @@ def usuarioLogin():
 
     try:
         cur = mysql.connection.cursor()
-        cur.execute('SELECT email, contraseña FROM usuario WHERE email = %s', [email])
+        cur.execute('SELECT U.email, U.contraseña, R.descripcion FROM usuario U JOIN roles R ON U.rol = R.idRoles WHERE email = %s', [email])
         user = cur.fetchone()
         if user and user[1] == password:  # Aquí simplemente se compara directamente, pero deberías usar hashing.
             session['logged_in'] = True
             session['user_email'] = email
+            session['tipo_usuario'] = user[2]
             flash('Inicio de sesión correcto.', 'success')
             return redirect(url_for('index'))
         else:
@@ -186,6 +252,7 @@ def usuarioLogin():
 def logout():
     session.pop('logged_in', None)
     session.pop('user_email', None)
+    session.pop('tipo_usuario', None)
     flash('Has cerrado sesión.', 'success')
     return redirect(url_for('index'))
 

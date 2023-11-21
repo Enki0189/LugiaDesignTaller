@@ -1,0 +1,47 @@
+{% extends 'layout.html'%} {% block body %}
+<link rel="stylesheet" href="{{url_for('static', filename='./css/estilo-login-register.css')}}">
+
+<form action="/producto" method="post">
+    <div class="container-fluid cuadro">
+        <div class="row">
+            <div class="col-6 mb-3">
+                <label for="exampleInputEmail1" class="form-label">Nombre de producto</label>
+                <input type="text" class="form-control" id="nombreProducto" name="nombreProducto"
+                    aria-describedby="emailHelp">
+            </div>
+            <div class=" col-6 mb-3">
+                <label for="exampleInputEmail1" class="form-label">urlImagen</label>
+                <input type="text" class="form-control" id="urlImagen" name="urlImagen">
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <label for="exampleInputPassword1" class="form-label">descripcion</label>
+                <input type="text" class="form-control" id="descripcion" name="descripcion">
+            </div>
+            <div class="col-6 mb-3">
+                <label for="exampleInputPassword1" class="form-label">precio</label>
+                <input type="text" class="form-control" id="precio" name="precio">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <label for="exampleInputEmail1" class="form-label">Stock</label>
+                <input type="text" class="form-control" id="stock" name="stock"
+                    aria-describedby="emailHelp">
+            </div>
+            
+
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </div>
+    </div>
+</form>
+
+{% endblock%}
