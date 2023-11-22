@@ -6,8 +6,8 @@ from flask import session
 
 # SDK de Mercado Pago
 import mercadopago
-# Agrega credenciales
-sdk = mercadopago.SDK("TEST-7239674602195698-111913-edff4bc486e52b9e57f185f6a334ac94-311156457")
+# Agrega access token de aplicacion de mercado pago
+sdk = mercadopago.SDK("TEST-2662247305576876-112118-aef012964bf37797f2668f83221e4db7-418530695")
 
 
 #flask instance
@@ -17,10 +17,7 @@ app.secret_key = 'alguna_clave_secreta_y_dificil_de_adivinar'
 #configuracion base de datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-
 app.config['MYSQL_PASSWORD'] = '010420'
-
-
 app.config['MYSQL_DB'] = 'lugia_design'
 
 mysql = MySQL(app)
@@ -257,14 +254,7 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/checkout', methods=['POST'])
-def checkout():
-    #nombres = request.form.getlist('nombre[]')
-    #descripciones = request.form.getlist('descripcion[]')
-    #cantidades = request.form.getlist('cantidad[]')
-    #precios = request.form.getlist('precio[]')
-
-    # Hacer algo con los datos, como procesar la compra, almacenar en la base de datos, etc.
-    
+def checkout():    
     items = []
     print(f'Sesion cart: {session["cart"]}')
     for product in session["cart"]:
