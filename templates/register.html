@@ -1,12 +1,14 @@
 {% extends 'layout.html'%} {% block body %}
-<link rel="stylesheet" href="{{url_for('static', filename='./css/estilo-login-register.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='./css/estilo-login-register.css')}}"> {% with messages = get_flashed_messages() %} {% if messages %} {% for msg in messages %}
+<p>{{msg}}</p>
+{% endfor %} {% endif %} {% endwith %}
 
 <form action="/usuario" method="post">
     <div class="container-fluid cuadro">
         <div class="row">
             <div class="col-6 mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nombre de usuario</label>
-                <input type="text" class="form-control" id="userName"  name="userName" aria-describedby="emailHelp">
+                <input type="text" class="form-control" id="userName" name="userName" aria-describedby="emailHelp">
             </div>
             <div class=" col-6 mb-3">
                 <label for="exampleInputEmail1" class="form-label">Correo electrónico</label>

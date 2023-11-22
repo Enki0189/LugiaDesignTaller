@@ -5,7 +5,6 @@
         <div id="allcards" class="row">
             {% for product in products %}
             <div class="card col-lg-4 col-12">
-
                 <h2>{{ product.name }}</h2>
                 <img src="{{url_for('static', filename='Imagenes/' + product.imagen)}}" alt="{{ product.imagen.split('.')[0] }}" class="imagenProd">
                 <p class="p-size">{{ product.descripcion }}</p>
@@ -17,7 +16,6 @@
                         <input type="submit" value="Comprar" class="btn-check">
                     </div>
                 </form>
-
             </div>
             {% endfor %}
         </div>

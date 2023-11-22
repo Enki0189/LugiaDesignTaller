@@ -17,7 +17,7 @@ app.secret_key = 'alguna_clave_secreta_y_dificil_de_adivinar'
 #configuracion base de datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '010420'
+app.config['MYSQL_PASSWORD'] = '****'
 app.config['MYSQL_DB'] = 'lugia_design'
 
 mysql = MySQL(app)
@@ -26,11 +26,6 @@ mysql = MySQL(app)
 @app.route('/')
 def index():
     return render_template("index.html")
-
-''' este es el método que intenté usar para la conexión con Node
-@app.route('/flask', methods=['GET'])
-def flaskServer():
-    return "flask server"'''
 
 @app.route('/contacto')
 def contacto():
@@ -114,6 +109,7 @@ def producto():
 
 @app.route('/pagUsuario')
 def pagUsuario():
+
     return render_template("pagUsuario.html")
 
 @app.route('/login')
@@ -238,7 +234,7 @@ def usuarioLogin():
             flash('Inicio de sesión correcto.', 'success')
             return redirect(url_for('index'))
         else:
-            flash('Usuario y/o contraseñas incorrectos. Por favor intenta nuevamente.', 'danger')
+            flash('E-mail y/o contraseñas incorrectos. Por favor intenta nuevamente.', 'danger')
     except Exception as e:
         print(f"Error: {e}")
         flash('Hubo un error al intentar iniciar sesión. Por favor intenta nuevamente.', 'danger')
