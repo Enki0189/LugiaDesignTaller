@@ -17,7 +17,7 @@ app.secret_key = 'alguna_clave_secreta_y_dificil_de_adivinar'
 #configuracion base de datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '*****'
+app.config['MYSQL_PASSWORD'] = '010420'
 app.config['MYSQL_DB'] = 'lugia_design'
 
 mysql = MySQL(app)
@@ -52,6 +52,7 @@ def productos():
             "descripcion": product[1], 
             "imagen": product[4], 
             "price": "${:,.2f}".format(product[2]),
+            "quantity": 0,
             "id": product[5]
         }
         products.append(product_data)
@@ -67,15 +68,26 @@ def productos():
 @app.route('/add_to_cart', methods=["POST"])
 def add_to_cart():
     itemId = int(request.form["id"])
-    print(session["productosCargados"][itemId-1])
-    session["cart"].append(session["productosCargados"][itemId-1])
+    print(itemId)
 
-    productPrice = session["productosCargados"][itemId-1]["price"].replace('$','').replace(',', '')
-    session["totalprice"] = float(session["totalprice"]) + float(productPrice)
+    # Buscar el producto en session["productosCargados"] usando una función lambda
+    selected_product = next((product for product in session["productosCargados"] if product["id"] == itemId), None)
 
+    if selected_product:
+        # Buscar el producto en session["cart"] usando una función lambda
+        cart_product = next((product for product in session["cart"] if product["id"] == itemId), None)
 
-    print(session["totalprice"])
-    print(session["cart"])
+        if cart_product:
+            # Incrementar la propiedad "quantity" en 1 si ya existe en el carrito
+            cart_product["quantity"] += 1
+        else:
+            # Agregar el producto al carrito con "quantity" establecido en 1
+            selected_product["quantity"] = 1
+            session["cart"].append(selected_product)
+
+        productPrice = selected_product["price"].replace('$', '').replace(',', '')
+        session["totalprice"] = float(session["totalprice"]) + float(productPrice)
+
     return redirect(url_for('productos'))
 
 
@@ -283,7 +295,7 @@ def checkout():
                 "description": product["descripcion"],
                 "unit_price": float(product["price"].replace('$','').replace(',', '')),
                 "currency_id": "ARS",
-                "quantity": 1,
+                "quantity": product["quantity"],
             })
     print(f"Items: {items}")
 
