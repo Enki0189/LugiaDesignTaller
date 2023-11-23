@@ -1,7 +1,9 @@
 {% extends 'layout.html'%} {% block body %}
-<link rel="stylesheet" href="{{url_for('static', filename='./css/estilo-login-register.css')}}"> {% with messages = get_flashed_messages() %} {% if messages %} {% for msg in messages %}
-<p>{{msg}}</p>
-{% endfor %} {% endif %} {% endwith %}
+<link rel="stylesheet" href="{{url_for('static', filename='./css/estilo-login-register.css')}}"> {% for msg in messages %}
+<div class="flash-message">
+    <p>{{msg}}</p>
+</div>
+{% endfor %}
 
 <form action="/usuario" method="post">
     <div class="container-fluid cuadro">
