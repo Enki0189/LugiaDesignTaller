@@ -16,48 +16,46 @@
     </div>
     <div class="contentWrapper col-10">
         <div class="content active" id="info">
+            {% for user in session["current_user"] %}
             <table class="table">
+
                 <button type="button" class="btn btn-primary">Editar datos</button>
                 <tr>
                     <td>Usuario</td>
-                    <td>maria2</td>
+                    <td>{{user.user}}</td>
                 </tr>
                 <tr>
                     <td>Nombre</td>
-                    <td>María Perez</td>
+                    <td>{{user.name}}</td>
                 </tr>
                 <tr>
                     <td>Email</td>
-                    <td>Maria@gmail.com</td>
+                    <td>{{user.email}}</td>
                 </tr>
                 <tr>
                     <td>CUIL</td>
-                    <td>23-32654946-4</td>
+                    <td>{{user.email}}</td>
                 </tr>
                 <tr>
                     <td>Teléfono</td>
-                    <td>+54 011 2623 3464</td>
-                </tr>
-                <tr>
-                    <td>Teléfono alternativo</td>
-                    <td>+54 011 3654 3354</td>
+                    <td>{{user.phone}}</td>
                 </tr>
                 <tr>
                     <td>Provincia</td>
-                    <td>Ciudad Autónoma de Buenos Aires</td>
+                    <td>{{user.province}}</td>
                 </tr>
 
                 <tr>
                     <td>Dirección</td>
-                    <td>Av. San Juan 3642 7° A</td>
+                    <td>{{user.address}}</td>
                 </tr>
-
                 <tr>
                     <td>Contraseña</td>
                     <td>**********
                         <button type="button" class="btn btn-primary">Cambiar contraseña</button>
                     </td>
                 </tr>
+                {% endfor %}
             </table>
         </div>
 

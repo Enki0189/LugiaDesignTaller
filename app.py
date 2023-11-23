@@ -109,7 +109,30 @@ def producto():
 
 @app.route('/pagUsuario')
 def pagUsuario():
-
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT NombreUsuario, Contraseña, Rol, Email, Direccion, Telefono, nombreYapellido, cuil, provincia FROM usuario")
+    info_users = cur.fetchall()
+    usuario_actual = []
+    if "current_user" not in session:
+        session["current_user"] = []
+    #print(info_users)
+    for user in info_users:
+        if user[3] == session['user_email']:
+            current_user = {
+                "user": user[0],
+                "name": user[6],
+                "email": user[3],
+                "cuil": user[7],
+                "phone": user[5],
+                "province": user[8],
+                "address": user[4],
+                "password": user[1],
+                "role": user[2]
+            }
+            usuario_actual.append(current_user)
+            
+    session["current_user"] = usuario_actual
+    print(session["current_user"])
     return render_template("pagUsuario.html")
 
 @app.route('/login')
@@ -227,7 +250,7 @@ def usuarioLogin():
         cur = mysql.connection.cursor()
         cur.execute('SELECT U.email, U.contraseña, R.descripcion FROM usuario U JOIN roles R ON U.rol = R.idRoles WHERE email = %s', [email])
         user = cur.fetchone()
-        if user and user[1] == password:  # Aquí simplemente se compara directamente, pero deberías usar hashing.
+        if user and user[1] == password:  # Aquí simplemente se compara directamente, pero deberíamos usar hashing.
             session['logged_in'] = True
             session['user_email'] = email
             session['tipo_usuario'] = user[2]
