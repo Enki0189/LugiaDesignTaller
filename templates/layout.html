@@ -55,7 +55,11 @@
         <!-- fin barra de navegacion -->
     </header>
     <!-- fin encabezado -->
-
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for msg in messages %}
+    <div class="flash-message">
+        <p>{{msg}}</p>
+    </div>
+    {% endfor %} {% endif %} {% endwith %}
     <div class="cuerpo container pt-4">
         {% block body%} {% endblock %}
     </div>
@@ -118,7 +122,7 @@
                         <div class="cart-body">
                             <form method="post" action="/checkout">
                                 {% if session["cart"] == [] %}
-                                <p>Carrito vacío</p>
+                                <p id="empty-cart">Carrito vacío</p>
                                 {% else %}
                                 <table class="table">
                                     <tr>
@@ -137,7 +141,7 @@
                                     </tr>{% endfor %}
                                 </table>
                                 <button type="submit">Comprar</button>
-                                <button type="button">Vaciar carrito</button>
+                                <button type="button"><a href="{{ url_for('empty_cart') }}" target="_self">Vaciar carrito</a></button>
                             </form>
                             {% endif%}
                         </div>

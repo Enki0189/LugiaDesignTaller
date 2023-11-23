@@ -330,3 +330,19 @@ h3 {
     object-fit: cover;
     /* Ajusta el tamaño de la imagen para que cubra todo el contenedor sin distorsionarse */
 }
+
+.flash-message {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2vw;
+    padding-top: 1vw;
+    width: 50%;
+    text-align: center;
+    border: 1px solid dodgerblue;
+}
+
+#empty-cart {
+    text-align: center;
+    margin: auto;
+    width: 50%;
+}

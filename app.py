@@ -17,7 +17,7 @@ app.secret_key = 'alguna_clave_secreta_y_dificil_de_adivinar'
 #configuracion base de datos
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '010420'
+app.config['MYSQL_PASSWORD'] = '*****'
 app.config['MYSQL_DB'] = 'lugia_design'
 
 mysql = MySQL(app)
@@ -100,7 +100,8 @@ def carrito():
 def empty_cart():
     session["cart"] = []
     session["totalprice"] = 0
-    return render_template("carrito.html")
+    flash('Se han eliminado todos los productos del carrito', 'success')
+    return redirect(url_for("productos"))
 
 #producto individual
 @app.route('/producto')
@@ -257,7 +258,7 @@ def usuarioLogin():
             flash('Inicio de sesión correcto.', 'success')
             return redirect(url_for('index'))
         else:
-            flash('E-mail y/o contraseñas incorrectos. Por favor intenta nuevamente.', 'danger')
+            flash('E-mail y/o contraseña incorrectos. Por favor intenta nuevamente.', 'danger')
     except Exception as e:
         print(f"Error: {e}")
         flash('Hubo un error al intentar iniciar sesión. Por favor intenta nuevamente.', 'danger')
@@ -270,7 +271,7 @@ def logout():
     session.pop('user_email', None)
     session.pop('tipo_usuario', None)
     flash('Has cerrado sesión.', 'success')
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 @app.route('/checkout', methods=['POST'])
 def checkout():    
