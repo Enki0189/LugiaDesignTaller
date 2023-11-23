@@ -9,6 +9,7 @@
                 <img src="{{url_for('static', filename='Imagenes/' + product.imagen)}}" alt="{{ product.imagen.split('.')[0] }}" class="imagenProd">
                 <p class="p-size">{{ product.descripcion }}</p>
                 <p class="p-size">{{ product.price }}</p>
+                {% if session.get('tipo_usuario') != 'Vendedor'%}
                 <form method="post" action="/add_to_cart">
                     <button class="btn add-to-cart">Agregar</button>
                     <div class="add-to-cart">
@@ -16,6 +17,10 @@
                         <input type="submit" value="Comprar" class="btn-check">
                     </div>
                 </form>
+                {% else %}
+                <button class="btn add-to-cart" onclick="eliminarProducto('{{product.id}}')">Eliminar</button>
+                 
+                {% endif %}
             </div>
             {% endfor %}
         </div>

@@ -174,7 +174,7 @@ def crearProducto():
     return redirect(url_for('abmProducto'))
 
 
-@app.route('/producto/<int:id>' , methods = ['PUT'])
+@app.route('/producto/<int:idProducto>' , methods = ['PUT'])
 def editarProducto(idProducto):
     print('Se recibe edicion de producto.')
     nombreProducto = request.form['nombreProducto']
@@ -196,13 +196,13 @@ def editarProducto(idProducto):
 
     return redirect(url_for('abmProducto'))
 
-@app.route('/producto/<int:id>' , methods = ['DELETE'])
+@app.route('/producto/<int:idProducto>' , methods = ['DELETE'])
 def borrarProducto(idProducto):
     print('Se recibe eliminacion de producto.')
     
     try:
         cur = mysql.connection.cursor()
-        cur.execute('DELETE FROM productos WHERE idProductos = %s', (idProducto))
+        cur.execute('DELETE FROM productos WHERE idProductos = ' + str(idProducto))
         mysql.connection.commit()
         flash('Producto eliminado exitosamente!', 'success')
         return redirect(url_for('productos'))
@@ -211,7 +211,7 @@ def borrarProducto(idProducto):
         print(f"Error: {e}")
         flash('Hubo un error al eliminar el producto. Por favor intenta nuevamente.', 'danger')
 
-    return redirect(url_for('abmProducto'))
+    return redirect(url_for('productos'))
 
 @app.route('/usuario' , methods = ['POST'])
 def crearUsuario():

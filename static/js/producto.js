@@ -1,33 +1,21 @@
-// Función para obtener el parámetro "id" de la URL
-function obtenerIdProducto() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('id');
+function eliminarProducto(productId) {
+        if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+            fetch(`/producto/${productId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al eliminar el producto');
+                }
+                // No necesitas response.url en este caso
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Manejar errores si es necesario
+            });
+        }
 }
-
-// Función para mostrar los detalles del producto
-function mostrarProducto() {
-    const id = obtenerIdProducto();
-    const producto = productos.find(p => p.id.toString() === id.toString());
-
-    if (producto) {
-        const detalles = document.getElementById('producto-detalles');
-        detalles.innerHTML = `
-        <h2>${producto.nombre}</h2>
-        <p>Precio: $${producto.precio}</p>
-        `;
-
-        const botonAgregar = document.getElementById('agregar-carrito');
-        botonAgregar.addEventListener('click', ( ) => {
-            agregarAlCarrito(producto);
-        });
-    } else {
-        detalles.innerHTML = 'Producto no encontrado. ';
-    }
-  }
-
-  // Función para agregar un producto al carrito
-  function agregarAlCarrito(producto) {
-    // Logica para agregar el producto al carrito utilizando API de Mercado Pago
-    // utilizar la API de Mercado Pago para agregar el producto al carrito
-    // https://www.mercadopago.com.ar/
-  }
