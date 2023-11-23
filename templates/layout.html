@@ -134,12 +134,12 @@
                                         <td id="descripcion">{{product.descripcion}}</td>
                                         <td id="cantidad">1</td>
                                         <td id="precio">{{product.price}}</td>
-                                    </tr>
+                                    </tr>{% endfor %}
                                 </table>
                                 <button type="submit">Comprar</button>
                                 <button type="button">Vaciar carrito</button>
                             </form>
-                            {% endfor %} {% endif%}
+                            {% endif%}
                         </div>
                     </div>
                     <div id="btnModal" class="modal-footer"></div>
