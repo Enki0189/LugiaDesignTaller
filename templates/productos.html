@@ -11,16 +11,14 @@
                 <p class="p-size">{{ product.price }}</p>
                 {% if session.get('tipo_usuario') != 'Vendedor'%}
                 <form method="post" action="/add_to_cart">
-                    <button class="btn add-to-cart">Agregar</button>
+                    <button class="btn add-to-cart boton-carrito">Agregar</button>
                     <div class="add-to-cart">
                         <input type="hidden" name="id" value="{{product.id}}" />
                         <input type="submit" value="Comprar" class="btn-check">
                     </div>
                 </form>
                 {% else %}
-                <button class="btn add-to-cart" onclick="eliminarProducto('{{product.id}}')">Eliminar</button>
-                 
-                {% endif %}
+                <button class="btn add-to-cart " onclick="eliminarProducto('{{product.id}}')">Eliminar</button> {% endif %}
             </div>
             {% endfor %}
         </div>

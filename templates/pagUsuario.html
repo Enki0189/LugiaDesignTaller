@@ -1,6 +1,7 @@
 {% extends 'layout.html'%} {% block body %} {% for msg in messages %}
 <div class="flash-message">
     <p>{{msg}}</p>
+
 </div>
 {% endfor %}
 <link rel="stylesheet" href="{{url_for('static', filename='./css/estilo-pagUsuario.css')}}">
@@ -9,11 +10,11 @@
         <div class="buttonWrapper" id="barra-lateral">
             <ul class="nav flex-column">
                 <p id="titulo-menu">Menú</p>
-                <li class="nav-item">
+                <li class="nav-item navitem-barra">
                     <button class="nav-link tab-button active" data-id="info">Mi información</button></li>
-                <li class="nav-item">
+                <li class="nav-item navitem-barra">
                     <button class="nav-link tab-button" data-id="pedidos">Mis pedidos</button></li>
-                <li class="nav-item">
+                <li class="nav-item navitem-barra">
                     <button class="nav-link tab-button" data-id="deseos">Mi lista de deseos</button></li>
             </ul>
         </div>

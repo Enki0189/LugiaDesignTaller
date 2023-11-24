@@ -381,3 +381,15 @@ h3 {
     background-color: rgb(155, 201, 247) !important;
     box-shadow: 2px 2px 4px rgb(33, 139, 245);
 }
+
+.prod-checkout-img {
+    height: 4vw;
+    width: auto;
+}
+
+
+/*cambia de color el texto del boton de mp*/
+
+.svelte-16x6ay9 {
+    color: black;
+}
