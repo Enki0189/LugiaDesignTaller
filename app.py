@@ -91,22 +91,6 @@ def add_to_cart():
     return redirect(url_for('productos'))
 
 
-@app.route('/carrito')
-def carrito():
-    productos_carrito = []
-    if session["cart"] != []:
-        print("hay algo")
-        for product in session["cart"]:
-            producto_carrito = {
-                "nombre": product["name"],
-                "precio_unit": product["price"],
-                "id": product["id"]
-            }
-            productos_carrito.append(producto_carrito)        
-    else:
-        print("vacio")
-    print(productos_carrito)
-    return render_template("carrito.html")
 
 @app.route('/empty_cart')
 def empty_cart():
@@ -115,10 +99,6 @@ def empty_cart():
     flash('Se han eliminado todos los productos del carrito', 'success')
     return redirect(url_for("productos"))
 
-#producto individual
-@app.route('/producto')
-def producto():
-    return render_template("producto.html")
 
 @app.route('/pagUsuario')
 def pagUsuario():
@@ -339,25 +319,6 @@ def checkout():
     # Puedes redirigir a otra página después de procesar los datos
     return render_template('mercadoPago.html')
 
-
-@app.route('/generar')
-def payment(req):
-    # Crea un ítem en la preferencia
-    preference_data = {
-        "items": [
-            {
-                #esto es de prueba, más adelante tomar info de BD
-                "title": "Escritorio",
-                "description": "escritorio gamer",
-                "unit_price": 100,
-                "currency_id": "ARS",
-                "quantity": 1,
-            }
-        ]
-    }
-
-    preference_response = sdk.preference().create(preference_data)
-    preference = preference_response["response"]
 
 #prueba de flask, no es necesario por ahora
 #user profile
