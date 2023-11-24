@@ -1,21 +1,50 @@
 {% extends 'layout.html'%} {% block body %}
 
 <main>
+    <div id="resumen-carrito">
+        <h3>Resumen de tu compra</h3>
+        <table class="table">
+            <tr>
+                <th></th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Precio unitario</th>
+            </tr>
+            {% for product in session["cart"] %}
+            <tr>
+                <td>
+                    <img src="{{url_for('static', filename='Imagenes/' + product.imagen)}}" alt="{{ product.imagen.split('.')[0] }}" class="prod-checkout-img">
+                </td>
+                <td id="nombre">{{product.name}}</td>
+                <td id="descripcion">{{product.descripcion}}</td>
+                <td id="cantidad">{{product.quantity}}</td>
+                <td id="precio">{{product.price}}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Precio total</th>
+                <th></th>
+                <th>${% if session.get('totalprice') %} {{session.get('totalprice')}} {% else %} 0 {% endif %}</th>
+            </tr>
+        </table>
+    </div>
+
     <div id="wallet_container">
     </div>
     <script>
-      const mp = new MercadoPago('TEST-3ada211b-d936-4b2d-9d07-340abfe6b675', {
-        locale: 'es-AR'
-      });
+        const mp = new MercadoPago('TEST-3ada211b-d936-4b2d-9d07-340abfe6b675', {
+            locale: 'es-AR'
+        });
 
-      mp.bricks().create("wallet", "wallet_container", {
-        initialization: {
-            preferenceId: '{{session.get('preferenceId')}}',
-        },
-      });
+        mp.bricks().create("wallet", "wallet_container", {
+            initialization: {
+                preferenceId: '{{session.get('
+                preferenceId ')}}',
+            },
+        });
     </script>
 </main>
 {% endblock%}
-        
-
-

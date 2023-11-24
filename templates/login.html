@@ -1,6 +1,10 @@
 {% extends 'layout.html'%} {% block body %} {% for msg in messages %}
 <div class="flash-message">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true"></span>
+    </button>
     <p>{{msg}}</p>
+
 </div>
 {% endfor %}
 
