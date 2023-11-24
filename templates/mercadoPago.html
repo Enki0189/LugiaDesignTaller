@@ -36,14 +36,13 @@
     </div>
     <script>
         const mp = new MercadoPago('TEST-3ada211b-d936-4b2d-9d07-340abfe6b675', {
-            locale: 'es-AR'
+          locale: 'es-AR'
         });
-
+  
         mp.bricks().create("wallet", "wallet_container", {
-            initialization: {
-                preferenceId: '{{session.get('
-                preferenceId ')}}',
-            },
+          initialization: {
+              preferenceId: '{{session.get('preferenceId')}}',
+          },
         });
     </script>
 </main>
